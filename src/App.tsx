@@ -1,18 +1,8 @@
 
-import Login from './pages/LoginPage'
-import './App.css'
-function App() {
- 
+import AppRouter from './routes';
 
-  return (
-    <>
-      <div>
-       <Login/>
-      </div>
-     
-      
-    </>
-  )
+function App() {
+  return <AppRouter />;
 }
 
-export default App
+export default App;

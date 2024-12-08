@@ -1,7 +1,7 @@
 import React from 'react'
 import { TextField } from '@mui/material'
 
-interface InputFieldProps{
+interface InputField{
     label:string
     name:string
     
@@ -10,7 +10,7 @@ interface InputFieldProps{
     type:string
     fullWidth:boolean
 }
-const Input :React.FC<InputFieldProps>= ({name,value,onChange,type,fullWidth,label}) => {
+const Input :React.FC<InputField>= ({name,value,onChange,type,fullWidth,label}) => {
   return (
     <TextField
     label={label}
