@@ -21,7 +21,6 @@ const LoginContainer:React.FC = () => {
             onSubmit:async(values)=>{
                 try{
                         const response=await PostAdminLogin(values)
-                        console.log(response.data)
                     
                 }catch(error){
                     
