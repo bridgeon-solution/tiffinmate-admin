@@ -1,5 +1,5 @@
-import styled from "styled-components"; 
-import { Button } from "@mui/material";
+
+import { Button, styled } from "@mui/material";
 
 const CustomeButton=styled(Button)`
 &.MuiButton-contained{
