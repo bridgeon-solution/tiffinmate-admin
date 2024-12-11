@@ -7,6 +7,7 @@ import LoginPage from '../pages/loginPage';
 import Barchart from '../components/dashboard/barchart';
 import PieCharts from '../components/dashboard/piecharts';
 import Cards from '../components/dashboard/cards';
+import Vendorverificationpage from '../pages/vendorverificationpage';
 
 const AppRouter = () => {
   return (
@@ -24,6 +25,7 @@ const AppRouter = () => {
                 <Route path="barchart" element={<Barchart />} />
                 <Route path="piechart" element={<PieCharts />} />
                 <Route path="cards" element={<Cards />} />
+                <Route path="vendor-verification" element={<Vendorverificationpage/>}/>
               </Routes>
             </NavBar>
           }
