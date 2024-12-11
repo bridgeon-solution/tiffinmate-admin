@@ -20,7 +20,7 @@ const LoginContainer:React.FC = () => {
             }),
             onSubmit:async(values)=>{
                 try{
-                        const response=await PostAdminLogin(values)
+                    await PostAdminLogin(values)
                     
                 }catch(error){
                     
