@@ -20,10 +20,10 @@ const LoginContainer:React.FC = () => {
             }),
             onSubmit:async(values)=>{
                 try{
-                        const response=await PostAdminLogin(values)
-                    console.log(response.data)
+                    await PostAdminLogin(values)
+                    
                 }catch(error){
-                    console.error(error)
+                    
                 }
             }
     });

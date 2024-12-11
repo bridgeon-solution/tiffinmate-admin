@@ -23,6 +23,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import DrawerHeader from '../drawer';
 
 
 
@@ -51,13 +52,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
   },
 });
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  ...theme.mixins.toolbar,
-}));
+
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;

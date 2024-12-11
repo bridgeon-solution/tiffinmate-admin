@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import img from '../../assets/svg/imgFirst.jpg'
+import img from '../../assets/svg/imgFirst 1.webp'
 
 const LoginImageComponent :React.FC= () => {
   return (
