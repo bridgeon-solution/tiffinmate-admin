@@ -5,10 +5,14 @@ import PostAdminLogin from '../../services/Login'
 import React from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+
 
 
   
 const LoginContainer:React.FC = () => {
+    const navigate=useNavigate()
     const formik=useFormik({
         initialValues:{
             email:"",
@@ -21,9 +25,18 @@ const LoginContainer:React.FC = () => {
             onSubmit:async(values)=>{
                 try{
                         const response=await PostAdminLogin(values)
-                    console.log(response.data)
+                        if(response.data.message=="Login Successfull"){
+                            alert(response.data.message)
+                            navigate('\dashboard');
+                        }
+                        else{
+                            alert(response.data.error_message);
+                        }
+                       
+                        
+
                 }catch(error){
-                    console.error(error)
+                    toast.error("")
                 }
             }
     });

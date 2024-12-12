@@ -1,10 +1,9 @@
-import axios from 'axios';
+import axiosInstance from "../api";
 
-const BASE_URL="https://localhost:7009/api";
+
 
 const PostAdminLogin =async (data:{email:string;password:string}) => {
-  console.log(data)
-    const response=await axios.post(`${BASE_URL}/Admin/login`,data)
+    const response=await axiosInstance.post('/Admin/login',data)
   return response
     
 }
