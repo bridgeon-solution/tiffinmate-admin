@@ -1,17 +1,17 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import NavBar from '../atoms/navbar';
-import DashboardPage from '../pages/dashboardPage';
-import Orderlist from '../pages/orderlist';
-import Users from '../pages/users';
-import LoginPage from '../pages/loginPage';
-import Barchart from '../components/dashboard/barchart';
-import PieCharts from '../components/dashboard/piecharts';
-import Cards from '../components/dashboard/cards';
+import { lazy, Suspense } from 'react';
+
+const NavBar=lazy(()=>import('../atoms/navbar'))
+const DashboardPage=lazy(()=>import('../pages/dashboardPage'))
+const Orderlist=lazy(()=>import('../pages/orderlist'))
+const Users=lazy(()=>import('../pages/users'))
+const LoginPage =lazy(()=>import('../pages/loginPage'))
 import Vendorverificationpage from '../pages/vendorverificationpage';
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
+    <Suspense fallback={<div>Loading....</div>}>
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route
@@ -22,15 +22,15 @@ const AppRouter = () => {
                 <Route path="dashboard" element={<DashboardPage />} />
                 <Route path="orderlist" element={<Orderlist />} />
                 <Route path="users" element={<Users />} />
-                <Route path="barchart" element={<Barchart />} />
-                <Route path="piechart" element={<PieCharts />} />
-                <Route path="cards" element={<Cards />} />
                 <Route path="vendor-verification" element={<Vendorverificationpage/>}/>
+
+                
               </Routes>
             </NavBar>
           }
         />
       </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 };

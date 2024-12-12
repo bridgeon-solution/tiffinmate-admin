@@ -9,11 +9,11 @@ interface PieChartData {
 }
 
 interface PieChartProps {
-  data: PieChartData[]; // Data for the PieChart
-  height?: number;      // Height of the chart
-  innerRadius?: number; // Inner radius for donut-style chart
+  data: PieChartData[]; 
+  height?: number;      
+  innerRadius?: number; 
   skipAnimation?: boolean; 
-  text:string// Skip animation flag
+  text:string
 }
 
 const PieChartComponent: React.FC<PieChartProps> = ({

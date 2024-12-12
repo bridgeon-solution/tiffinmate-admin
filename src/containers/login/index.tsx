@@ -24,17 +24,14 @@ const LoginContainer:React.FC = () => {
             }),
             onSubmit:async(values)=>{
                 try{
-                        const response=await PostAdminLogin(values)
-                        if(response.data.message=="Login Successfull"){
-                            alert(response.data.message)
-                            navigate('\dashboard');
-                        }
-                        else{
-                            alert(response.data.error_message);
-                        }
-                       
-                        
-
+                    const response=await PostAdminLogin(values)
+                    if(response.data.message=="Login Successfull"){
+                        alert(response.data.message)
+                        navigate('\dashboard');
+                    }
+                    else{
+                        alert(response.data.error_message);
+                    }
                 }catch(error){
                     toast.error("")
                 }
