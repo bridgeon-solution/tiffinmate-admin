@@ -6,8 +6,7 @@ const DashboardPage=lazy(()=>import('../pages/dashboardPage'))
 const Orderlist=lazy(()=>import('../pages/orderlist'))
 const Users=lazy(()=>import('../pages/users'))
 const LoginPage =lazy(()=>import('../pages/loginPage'))
-
-
+import Vendorverificationpage from '../pages/vendorverificationpage';
 
 const AppRouter = () => {
   return (
@@ -23,6 +22,9 @@ const AppRouter = () => {
                 <Route path="dashboard" element={<DashboardPage />} />
                 <Route path="orderlist" element={<Orderlist />} />
                 <Route path="users" element={<Users />} />
+                <Route path="vendor-verification" element={<Vendorverificationpage/>}/>
+
+                
               </Routes>
             </NavBar>
           }

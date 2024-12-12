@@ -1,9 +1,9 @@
-import { Typography } from '@mui/material'
+import Usertable from '../components/user/userstable'
 
 const Users = () => {
   return (
     <div>
-    <Typography variant='h1'>users</Typography>
+   <Usertable/>
     </div>
   )
 }

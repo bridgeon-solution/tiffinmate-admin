@@ -58,6 +58,16 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 
+
+const DrawerHeaders = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: theme.spacing(0, 1),
+  ...theme.mixins.toolbar,
+}));
+
+
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })<AppBarProps>(({ theme, open }) => ({
@@ -75,6 +85,9 @@ const AppBar = styled(MuiAppBar, {
     }),
   }),
 }));
+
+
+
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -191,7 +204,7 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
         component="main" 
         sx={{ flexGrow: 1, p: 3, backgroundColor: '#D3D3D3', height: '100vh', overflow: 'auto' }}
       >
-        <DrawerHeader />
+        <DrawerHeaders />
         {children} 
       </Box>
     </Box>
