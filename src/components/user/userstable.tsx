@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import { StyledHead, StyledTable, StyledTd } from '../../atoms/table'
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BlockUnblockUser } from '../../services/user';
 
 interface User {
