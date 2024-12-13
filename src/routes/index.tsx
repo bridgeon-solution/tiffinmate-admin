@@ -6,7 +6,9 @@ const DashboardPage=lazy(()=>import('../pages/dashboardPage'))
 const Orderlist=lazy(()=>import('../pages/orderlist'))
 const Users=lazy(()=>import('../pages/users'))
 const LoginPage =lazy(()=>import('../pages/loginPage'))
-import Vendorverificationpage from '../pages/vendorverificationpage';
+const Vendorverificationpage =lazy(()=>import('../pages/vendorverificationpage'))
+const Vendorpage =lazy(()=>import('../pages/vendorPage'))
+
 
 const AppRouter = () => {
   return (
@@ -22,6 +24,7 @@ const AppRouter = () => {
                 <Route path="dashboard" element={<DashboardPage />} />
                 <Route path="orderlist" element={<Orderlist />} />
                 <Route path="users" element={<Users />} />
+                <Route path="food-providers" element={<Vendorpage/>}/>
                 <Route path="vendor-verification" element={<Vendorverificationpage/>}/>
 
                 

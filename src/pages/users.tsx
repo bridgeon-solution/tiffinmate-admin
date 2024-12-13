@@ -1,9 +1,9 @@
-import Usertable from '../components/user/userstable'
+import UserContainer from '../containers/users/input'
 
 const Users = () => {
   return (
     <div>
-   <Usertable/>
+      <UserContainer/>
     </div>
   )
 }

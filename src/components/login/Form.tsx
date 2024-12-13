@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material'
-import CustomeButton from '../../atoms/button'
+import {CustomeButton} from '../../atoms/button'
 import Input from '../../atoms/Input'
 
 interface LoginFormData{

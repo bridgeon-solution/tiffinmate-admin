@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProviderDetails from '../../services/provider';
-import Verificationtable from '../../components/vendorverification/verificationtable';
+import Verificationtable from '../../components/provider/verificationtable';
 
 interface Provider {
   id:string,
@@ -19,7 +19,7 @@ const ProviderContainer: React.FC = () => {
         const response = await ProviderDetails();
         setProviderData(response); 
       } catch (error) {
-        console.log(error);
+        window.alert(error)
       }
     };
     fetchProvider();
