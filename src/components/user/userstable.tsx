@@ -3,6 +3,7 @@ import { StyledHead, StyledTable, StyledTd } from '../../atoms/table'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import React from 'react';
 import { BlockUnblockUser } from '../../services/user';
+import { toast } from 'react-toastify';
 
 interface User {
   email:string;
@@ -22,7 +23,7 @@ const Usertable:React.FC<UserTableProps> = ({user}) => {
   
   }
   catch(error){
-    window.alert(error);
+    toast.error("something went wrong")
   }
   
   }

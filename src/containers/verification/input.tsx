@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ProviderDetails from '../../services/provider';
 import Verificationtable from '../../components/provider/verificationtable';
+import { toast } from 'react-toastify';
 
 interface Provider {
   id:string,
@@ -18,8 +19,8 @@ const ProviderContainer: React.FC = () => {
       try {
         const response = await ProviderDetails();
         setProviderData(response); 
-      } catch (error) {
-        window.alert(error)
+      } catch (error) { 
+       toast.error("something went wrong");
       }
     };
     fetchProvider();
