@@ -5,6 +5,7 @@ import Barchart from '../components/dashboard/barchart'
 const DashboardPage = () => {
   return (
     <div>
+      
         <Cards/>
         <PieCharts/>
         <Barchart/>

@@ -26,14 +26,14 @@ const LoginContainer:React.FC = () => {
                 try{
                     const response=await PostAdminLogin(values)
                     if(response.data.message=="Login Successfull"){
-                        alert(response.data.message)
                         navigate('\dashboard');
+                        toast.success("Admin login succesfully")
                     }
                     else{
-                        alert(response.data.error_message);
+                        toast.warning(response.data.error_message)
                     }
                 }catch(error){
-                    toast.error("")
+                    toast.error("something went wrong")
                 }
             }
     });

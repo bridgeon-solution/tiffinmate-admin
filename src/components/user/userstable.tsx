@@ -1,9 +1,34 @@
 import { Box } from '@mui/material'
 import { StyledHead, StyledTable, StyledTd } from '../../atoms/table'
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import React from 'react';
+import { BlockUnblockUser } from '../../services/user';
+import { toast } from 'react-toastify';
 
+interface User {
+  email:string;
+  name: string;
+  is_blocked: boolean;
+  id:string
+}
+interface UserTableProps {
+  user: User[];
+}
+const Usertable:React.FC<UserTableProps> = ({user}) => {
+  
+    const handleBlockUnblock=(id:string)=>{
+      try{
+    BlockUnblockUser(id);
+      
+  
+  }
+  catch(error){
+    toast.error("something went wrong")
+  }
+  
+  }
+ 
 
-const Usertable = () => {
     return (
       <Box>
           <StyledTable>
@@ -12,24 +37,30 @@ const Usertable = () => {
                   <StyledHead>Name</StyledHead>
                   <StyledHead>User_id</StyledHead>
                   <StyledHead>Email_addres</StyledHead>
-                  <StyledHead>Subscription_status</StyledHead>
                   <StyledHead>User_status</StyledHead>
                     <StyledHead> details</StyledHead>
                   
               </tr>
               </thead>
               <tbody>
-              <tr>
-             <StyledTd>manoj</StyledTd>
-             <StyledTd>111</StyledTd>
-             <StyledTd>manoj</StyledTd>
-             <StyledTd>Active</StyledTd>
-             <StyledTd>Bloked</StyledTd>
-             <StyledTd><VisibilityIcon/></StyledTd>
-
-            
-             
-              </tr>
+             {user.map((vendor) => (
+            <tr >
+              <StyledTd>{vendor.name}</StyledTd>
+              <StyledTd>{vendor.id}</StyledTd>
+              <StyledTd>{vendor.email}</StyledTd>
+              <StyledTd><button onClick={()=>handleBlockUnblock(vendor.id)}
+                style={{
+                  backgroundColor:vendor.is_blocked?"green":"red",
+                  color:"white",
+                  border:"none",
+                  padding:"5px 10px",
+                  cursor:"pointer"
+                }}>{vendor.is_blocked?"unblock":"block"}
+                </button></StyledTd>
+              <StyledTd><VisibilityIcon/></StyledTd>
+              
+            </tr>
+          ))}
               </tbody>
              
       </StyledTable>

@@ -1,36 +1,41 @@
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 
-const NavBar=lazy(()=>import('../atoms/navbar'))
-const DashboardPage=lazy(()=>import('../pages/dashboardPage'))
-const Orderlist=lazy(()=>import('../pages/orderlist'))
-const Users=lazy(()=>import('../pages/users'))
-const LoginPage =lazy(()=>import('../pages/loginPage'))
-import Vendorverificationpage from '../pages/vendorverificationpage';
+const NavBar = lazy(() => import('../atoms/navbar'));
+const DashboardPage = lazy(() => import('../pages/dashboardPage'));
+const Orderlist = lazy(() => import('../pages/orderlist'));
+const Users = lazy(() => import('../pages/users'));
+const LoginPage = lazy(() => import('../pages/loginPage'));
+const VendorVerificationPage = lazy(() => import('../pages/vendorverificationpage'));
+const VendorPage = lazy(() => import('../pages/vendorPage'));
 
-const AppRouter = () => {
+const AppRouter: React.FC = () => {
   return (
     <BrowserRouter>
-    <Suspense fallback={<div>Loading....</div>}>
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route
-          path="/*"
-          element={
-            <NavBar>
-              <Routes>
-                <Route path="dashboard" element={<DashboardPage />} />
-                <Route path="orderlist" element={<Orderlist />} />
-                <Route path="users" element={<Users />} />
-                <Route path="vendor-verification" element={<Vendorverificationpage/>}/>
-
-                
-              </Routes>
-            </NavBar>
-          }
-        />
-      </Routes>
+      <Suspense fallback={<div>Loading....</div>}>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route
+            path="/*"
+            element={
+              <NavBar>
+                <Routes>
+                  <Route path="dashboard" element={<DashboardPage />} />
+                  <Route path="orderlist" element={<Orderlist />} />
+                  <Route path="users" element={<Users />} />
+                  <Route path="food-providers" element={<VendorPage />} />
+                  <Route path="vendor-verification" element={<VendorVerificationPage />} />
+                </Routes>
+              </NavBar>
+            }
+          />
+        </Routes>
       </Suspense>
+      
+      <ToastContainer/>
     </BrowserRouter>
   );
 };

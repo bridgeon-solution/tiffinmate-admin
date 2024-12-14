@@ -30,7 +30,6 @@ const Verificationtable: React.FC<VerificationtableProps> = ({ provider }) => {
             <StyledHead>vendor_name</StyledHead>
             <StyledHead>Vendor_id</StyledHead>
             <StyledHead>Email</StyledHead>
-            {/* <StyledHead>Location</StyledHead> */}
             <StyledHead>Health Certificate</StyledHead>
             <StyledHead>Action</StyledHead>
           </tr>
@@ -41,7 +40,7 @@ const Verificationtable: React.FC<VerificationtableProps> = ({ provider }) => {
               <StyledTd>{vendor.username}</StyledTd>
               <StyledTd>{vendor.id}</StyledTd>
               <StyledTd>{vendor.email}</StyledTd>
-              <StyledTd><VisibilityIcon 
+                <StyledTd><VisibilityIcon 
               style={{cursor:'pointer'}}
               onClick={()=>handleViewCertificate(vendor.certificate)}
               /></StyledTd>
