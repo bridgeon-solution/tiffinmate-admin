@@ -6,23 +6,23 @@ import { Typography } from '@mui/material';
 interface PieChartData {
   label: string;
   value: number;
+  color?: string; 
 }
 
 interface PieChartProps {
-  data: PieChartData[]; 
-  height?: number;      
-  innerRadius?: number; 
-  skipAnimation?: boolean; 
-  text:string
+  data: PieChartData[];
+  height?: number;
+  innerRadius?: number;
+  skipAnimation?: boolean;
+  text: string;
 }
 
 const PieChartComponent: React.FC<PieChartProps> = ({
   data,
   height = 300,
-  innerRadius =100 ,
+  innerRadius = 70,
   skipAnimation = false,
-  text
-  
+  text,
 }) => {
   return (
     <Box sx={{ width: '100%' }}>
@@ -30,15 +30,17 @@ const PieChartComponent: React.FC<PieChartProps> = ({
         height={height}
         series={[
           {
-            data: data,
+            data: data.map((item) => ({
+              ...item,
+              color: item.color, 
+            })),
             innerRadius: innerRadius,
-            // arcLabel: (params) => params.label ?? '',
             arcLabelMinAngle: 100,
           },
         ]}
         skipAnimation={skipAnimation}
       />
-      <Typography sx={{marginLeft:"28%"}}>{text}</Typography>
+      <Typography sx={{ marginLeft: '28%' }}>{text}</Typography>
     </Box>
   );
 };
