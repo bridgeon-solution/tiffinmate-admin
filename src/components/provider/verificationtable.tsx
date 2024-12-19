@@ -4,6 +4,9 @@ import { StyledTable } from "../../atoms/table";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import DangerousOutlinedIcon from "@mui/icons-material/DangerousOutlined";
+import PaginationRounded from "../../atoms/pagination";
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+
 import {
   StyledInputBase,
   StyledSearchBar,
@@ -27,23 +30,19 @@ interface VerificationtableProps {
   RejectVerification: (id: string) => void;
   handlePageChange: (page: number) => void;
   setSearch: (search: string) => void;
+  handleDownloadCertificate:(certificate:string,name:string)=>void;
 }
 
 const Verificationtable: React.FC<VerificationtableProps> = ({
   provider,
   ApproveVerification,
   RejectVerification,
+  handlePageChange,
   setSearch,
+  handleDownloadCertificate
 }) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const filteredData = provider.filter((item) => {
-    const filterdPending = item.verification_status == "pending";
-    const searchFilterd = item.username
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    return filterdPending && searchFilterd;
-  });
-
+  
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSearch = e.target.value;
     setSearch(newSearch);
@@ -119,7 +118,8 @@ const Verificationtable: React.FC<VerificationtableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {filteredData.map((vendor) => (
+          {provider.length>0?(
+          provider.map((vendor) => (
             <tr>
               <td>{vendor.username}</td>
               <td>{vendor.id}</td>
@@ -129,21 +129,28 @@ const Verificationtable: React.FC<VerificationtableProps> = ({
                   style={{ cursor: "pointer" }}
                   onClick={() => handleViewCertificate(vendor.certificate)}
                 />
+                <FileDownloadOutlinedIcon color="primary" sx={{cursor:"pointer"}} onClick={()=>handleDownloadCertificate(vendor.certificate,vendor.username)} />
               </td>
               <td>
                 <CheckCircleOutlineIcon
                   style={{ cursor: "pointer", color: "#008000" }}
                   onClick={() => ApproveVerification(vendor.id)}
-                />
+                />  
                 <DangerousOutlinedIcon
                   style={{ cursor: "pointer", color: "#FF0000" }}
                   onClick={() => RejectVerification(vendor.id)}
                 />
               </td>
             </tr>
-          ))}
+          ))):(
+             <Typography variant="body1" color="textSecondary">
+                          No items found
+                        </Typography>
+          )}
         </tbody>
       </StyledTable>
+      <PaginationRounded totalPages={8} onPageChange={handlePageChange} />
+
     </Box>
   );
 };

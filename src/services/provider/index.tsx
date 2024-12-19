@@ -15,7 +15,7 @@ export const ProviderDetails = async () => {
 export const VerificationApprove = async (id: string) => {
   try {
     const response = await axiosInstance.post(
-      `/Verification/send-password/${id}`
+      `Verification/send-password/${id}`
     );
     if (response && response.data && response.data.result) {
       return response.data;
@@ -76,7 +76,7 @@ export const PaginationProvider = async (
 ) => {
   try {
     const response = await axiosInstance.get(
-      `/Provider/pagination?pageSize=${3}&page=${page}&search=${search}&filter=${filter}&verifystatus=approved`
+      `/Provider?pageSize=${3}&page=${page}&search=${search}&filter=${filter}&verifystatus=approved`
     );
 
     if (response && response.data && response.data.result) {
@@ -91,7 +91,7 @@ export const PaginationProvider = async (
 export const PaginationVerification = async (page: number, search: string) => {
   try {
     const response = await axiosInstance.get(
-      `/Provider/pagination?pageSize=${3}&page=${page}&search=${search}&verifystatus=pending`
+      `/Provider?pageSize=${3}&page=${page}&search=${search}&verifystatus=pending`
     );
 
     if (response && response.data && response.data.result) {

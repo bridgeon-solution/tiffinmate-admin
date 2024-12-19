@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   PaginationVerification,
-  ProviderDetails,
+
 } from "../../services/provider";
 import Verificationtable from "../../components/provider/verificationtable";
 import { toast } from "react-toastify";
@@ -20,22 +20,26 @@ interface Provider {
 
 const ProviderContainer: React.FC = () => {
   const [providerData, setProviderData] = useState<Provider[] | null>(null);
-  const [_, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+    const [, setLoading] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
 
   const FetchUser = async (page: number, search: string) => {
     try {
       const response = await PaginationVerification(page, search);
-
       setProviderData(response.result);
     } catch (error) {
       toast.error("Failed to fetch pagination data");
+    }
+    finally{
+      setLoading(false)
     }
   };
 
   const ApproveVerification = async (id: string) => {
     try {
       const response = await VerificationApprove(id);
+      FetchUser(currentPage,search)
       if (response.status == "success") {
         toast.success(response.result);
       } else {
@@ -49,6 +53,7 @@ const ProviderContainer: React.FC = () => {
   const RejectVerification = async (id: string) => {
     try {
       const response = await VerificationRejected(id);
+      FetchUser(currentPage,search)
       if (response.status == "success") {
         toast.success(response.result);
       }
@@ -62,21 +67,31 @@ const ProviderContainer: React.FC = () => {
     FetchUser(page, search);
   };
 
+  const handleDownloadCertificate=async(certificate:string,name:string)=>{
+    try{
+      const response= await fetch(certificate);
+      if(!response.ok){
+        throw new Error("failed to fetch image");
+      }
+      const blob=await response.blob();
+      const url=window.URL.createObjectURL(blob);
+      const link=document.createElement("a");
+      link.href=url;
+      link.download=`${name}/certificate.webp`;
+      link.click();
+      window.URL.revokeObjectURL(url);
+
+    }
+    catch(error){
+      toast.error("failed download image")
+    }
+  }
+
   useEffect(() => {
     FetchUser(1, search);
   }, [search]);
 
-  useEffect(() => {
-    const fetchProvider = async () => {
-      try {
-        const response = await ProviderDetails();
-        setProviderData(response);
-      } catch (error) {
-        toast.error("something went wrong");
-      }
-    };
-    fetchProvider();
-  }, [ApproveVerification, RejectVerification]);
+
 
   return (
     <div>
@@ -87,6 +102,7 @@ const ProviderContainer: React.FC = () => {
           ApproveVerification={ApproveVerification}
           setSearch={setSearch}
           handlePageChange={handlePageChange}
+          handleDownloadCertificate={handleDownloadCertificate}
         />
       ) : (
         <div>Loading...</div>
