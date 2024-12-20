@@ -14,7 +14,7 @@ interface Provider {
   id: string;
   certificate: string;
   email: string;
-  username: string;
+  user_name: string;
   verification_status: string;
 }
 
