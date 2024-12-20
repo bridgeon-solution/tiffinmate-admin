@@ -19,7 +19,7 @@ import SearchIcon from "@mui/icons-material/Search";
 interface Provider {
   email: string;
   certificate: string;
-  username: string;
+  user_name: string;
   verification_status: string;
   id: string;
 }
@@ -41,7 +41,7 @@ const Verificationtable: React.FC<VerificationtableProps> = ({
   setSearch,
   handleDownloadCertificate
 }) => {
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [_, setSearchQuery] = useState<string>("");
   
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSearch = e.target.value;
@@ -121,7 +121,7 @@ const Verificationtable: React.FC<VerificationtableProps> = ({
           {provider.length>0?(
           provider.map((vendor) => (
             <tr>
-              <td>{vendor.username}</td>
+              <td>{vendor.user_name}</td>
               <td>{vendor.id}</td>
               <td>{vendor.email}</td>
               <td>
@@ -129,7 +129,7 @@ const Verificationtable: React.FC<VerificationtableProps> = ({
                   style={{ cursor: "pointer" }}
                   onClick={() => handleViewCertificate(vendor.certificate)}
                 />
-                <FileDownloadOutlinedIcon color="primary" sx={{cursor:"pointer"}} onClick={()=>handleDownloadCertificate(vendor.certificate,vendor.username)} />
+                <FileDownloadOutlinedIcon color="primary" sx={{cursor:"pointer"}} onClick={()=>handleDownloadCertificate(vendor.certificate,vendor.user_name)} />
               </td>
               <td>
                 <CheckCircleOutlineIcon

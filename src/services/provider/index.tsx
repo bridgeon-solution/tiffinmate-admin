@@ -1,16 +1,6 @@
 import axiosInstance from "../api";
 
-export const ProviderDetails = async () => {
-  try {
-    const response = await axiosInstance.get("/Provider");
-    if (response && response.data && response.data.result) {
-      return response.data.result;
-    }
-    return null;
-  } catch (error) {
-    throw error;
-  }
-};
+
 
 export const VerificationApprove = async (id: string) => {
   try {

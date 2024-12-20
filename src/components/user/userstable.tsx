@@ -24,6 +24,7 @@ interface UserTableProps {
   handlePageChange: (page: number) => void;
   setSearch: (search: string) => void;
   setFilter: (filter: string) => void;
+  handleDetails: (id: string) => void;
 }
 
 const Usertable: React.FC<UserTableProps> = ({
@@ -32,6 +33,7 @@ const Usertable: React.FC<UserTableProps> = ({
   handlePageChange,
   setSearch,
   setFilter,
+  handleDetails,
 }) => {
   const [status, setStatus] = useState<string>("");
   const [_, setSearchQuery] = useState<string>("");
@@ -170,7 +172,10 @@ const Usertable: React.FC<UserTableProps> = ({
                   </button>
                 </td>
                 <td>
-                  <RemoveRedEyeOutlinedIcon />
+                  <RemoveRedEyeOutlinedIcon
+                    sx={{ cursor: "pointer" }}
+                    onClick={() => handleDetails(vendor.id)} 
+                  />
                 </td>
               </tr>
             ))

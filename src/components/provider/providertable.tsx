@@ -14,7 +14,7 @@ import PaginationRounded from "../../atoms/pagination";
 
 interface Provider {
   email: string;
-  username: string;
+  user_name: string;
   id: string;
   verification_status: string;
   is_blocked: boolean;
@@ -49,7 +49,7 @@ const Providertable: React.FC<ProviderTableProps> = ({
     { value: "false", label: "Active" },
     { value: "all", label: "All Providers" },
   ];
-
+  
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSearch = e.target.value;
     setSearch(newSearch);
@@ -144,7 +144,7 @@ const Providertable: React.FC<ProviderTableProps> = ({
           {provider.length > 0 ? (
             provider.map((vendor) => (
               <tr>
-                <td>{vendor.username}</td>
+                <td>{vendor.user_name}</td>
                 <td>{vendor.id}</td>
                 <td>{vendor.email}</td>
                 <td>

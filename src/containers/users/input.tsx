@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Usertable from "../../components/user/userstable";
 import { BlockUnblockUser, PaginationUser } from "../../services/user";
 import { toast } from "react-toastify";
+import BasicModal from "../../atoms/modal";
+import Userdetails from "../../components/user/userdetails";
 
 interface User {
   id: string;
@@ -16,6 +18,8 @@ const UserContainer: React.FC = () => {
   const [_, setLoading] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
   const [filter, setFilter] = useState<string>("all");
+  const [openModal,setOpenModal]=useState<boolean>(false);
+  const [selectedUserId,setSelectedUserId]=useState<string|null>(null);
 
   const FetchUser = async (page: number, search: string, filter: string) => {
     try {
@@ -42,6 +46,14 @@ const UserContainer: React.FC = () => {
     setCurrentPage(page);
     FetchUser(page, search, filter);
   };
+  const handleDetails = (id: string) => {
+    setSelectedUserId(id); 
+    setOpenModal(true); 
+  };
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setSelectedUserId(null); 
+  };
 
   useEffect(() => {
     FetchUser(1, search, filter);
@@ -56,10 +68,17 @@ const UserContainer: React.FC = () => {
           setFilter={setFilter}
           handleBlockUnblock={handleBlockUnblock}
           handlePageChange={handlePageChange}
+          handleDetails={handleDetails}
         />
       ) : (
         <div>No users found</div>
       )}
+    {openModal && selectedUserId && (
+  <BasicModal open={openModal} handleClose={handleCloseModal}>
+    <Userdetails userId={selectedUserId} handleClose={handleCloseModal} />
+  </BasicModal>
+)}
+
     </div>
   );
 };
