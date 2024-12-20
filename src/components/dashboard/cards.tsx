@@ -1,63 +1,88 @@
-import React from 'react';
-import { Box, Grid } from '@mui/material';
-import Card from '../../atoms/card';
-import FoodBankOutlinedIcon from '@mui/icons-material/FoodBankOutlined';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
+import React from "react";
+import { Grid, Box } from "@mui/material";
+import Card from "../../atoms/card";
+import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import PeopleIcon from "@mui/icons-material/People";
+import PieChartIcon from "@mui/icons-material/PieChart";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import StoreIcon from "@mui/icons-material/Store";
+import PieCharts from "./piecharts";
 
 const Cards: React.FC = () => {
   return (
-    <Box padding={2}>
-      <Grid container spacing={3}>
-        {/* Card 1 */}
-        <Grid item xs={12} sm={6} md={4}>
-          <Card
-            icon={<FoodBankOutlinedIcon sx={{ fontSize: '40px', color: '#2196f3' }} />}
-            number={50}
-            text="Total Orders"
-          />
-        </Grid>
-
-        {/* Card 2 */}
-        <Grid item xs={12} sm={6} md={4}>
-          <Card
-            icon={<ShoppingCartOutlinedIcon sx={{ fontSize: '40px', color: '#2196f3' }} />}
-            number={50}
-            text="Total Orders"
-          />
-        </Grid>
-
-        {/* Card 3 */}
-        <Grid item xs={12} sm={6} md={4}>
-          <Card
-            icon={<PeopleAltOutlinedIcon sx={{ fontSize: '40px', color: '#2196f3' }} />}
-            number={50}
-            text="Total Orders"
-          />
-        </Grid>
-
-        {/* Centered Row for Card 4 and Card 5 */}
-        <Grid container item xs={12} justifyContent="center" spacing={3}>
-          {/* Card 4 */}
-          <Grid item xs={12} sm={6} md={4}>
-            <Card
-              icon={<PeopleAltOutlinedIcon sx={{ fontSize: '40px', color: '#2196f3' }} />}
-              number={50}
-              text="Total Providers"
+    <Grid
+      container
+      spacing={2}
+      sx={{
+        padding: "20px",
+      }}
+    >
+      {/* card-1 */}
+      <Grid item xs={12} sm={6} md={4}>
+        <Card
+          icon={
+            <InsertDriveFileIcon
+              style={{ color: "#4caf50", fontSize: "30px" }}
             />
-          </Grid>
-
-          {/* Card 5 */}
-          <Grid item xs={12} sm={6} md={4}>
-            <Card
-              icon={<PeopleAltOutlinedIcon sx={{ fontSize: '40px', color: '#2196f3' }} />}
-              number={50}
-              text="Total Providers"
-            />
-          </Grid>
-        </Grid>
+          }
+          number={75}
+          text="Total Orders"
+        />
       </Grid>
-    </Box>
+      {/* card-2 */}
+      <Grid item xs={12} sm={6} md={4}>
+        <Card
+          icon={<PeopleIcon style={{ color: "#3f51b5", fontSize: "30px" }} />}
+          number={60}
+          text="Total Users"
+        />
+      </Grid>
+      {/* card-3 */}
+      <Grid item xs={12} sm={6} md={4}>
+        <Card
+          icon={<PieChartIcon style={{ color: "#f50057", fontSize: "30px" }} />}
+          number={40}
+          text="Total Revenue"
+        />
+      </Grid>
+
+      <Grid item xs={12} sm={6} md={4}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+          }}
+        >
+          {/* card-4 */}
+          <Card
+            icon={<StoreIcon style={{ color: "#ff9800", fontSize: "30px" }} />}
+            number={50}
+            text="Total Providers"
+          />
+          {/* card-5 */}
+          <Card
+            icon={
+              <LocalShippingIcon
+                style={{ color: "#9c27b0", fontSize: "30px" }}
+              />
+            }
+            number={85}
+            text="Total Delivered"
+          />
+        </Box>
+      </Grid>
+
+      <Grid item xs={12} sm={6} md={4}>
+        <Box
+          sx={{
+            display: "flex",
+          }}
+        >
+          <PieCharts />
+        </Box>
+      </Grid>
+    </Grid>
   );
 };
 

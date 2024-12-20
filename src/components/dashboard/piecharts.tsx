@@ -1,32 +1,33 @@
-import React from 'react';
-import { Box, Grid } from '@mui/material';
-import PieChartComponent from '../../atoms/piechart/index.tsx';
+import React from "react";
+import { Box, Grid } from "@mui/material";
+import PieChartComponent from "../../atoms/piechart/index.tsx";
 
 const PieCharts: React.FC = () => {
   const chartData1 = [
-    { label: 'Mobile', value: 80 },
-    { label: 'Desktop', value: 20 },
+    { label: "Orders", value: 80, color: "#e6852c" },
+    { label: "", value: 20, color: "#D3D3D3" },
   ];
 
   const chartData2 = [
-    { label: 'iOS', value: 60 },
-    { label: 'Android', value: 40 },
+    { label: "Revenue", value: 60, color: "#e6852c" },
+    { label: "", value: 40, color: "#D3D3D3" },
   ];
 
   return (
-    <Box padding={2}>
-      <Grid container spacing={2} justifyContent="center">
+    <Box>
+      <Grid container spacing={40}>
         {/* Chart 1 */}
-        <Grid item xs={12} sm={6} md={5}>
+        <Grid item xs={12} sm={6}>
           <Box
             sx={{
-              backgroundColor: 'white',
-              borderRadius: '10px',
+              backgroundColor: "white",
+              borderRadius: "10px",
               padding: 2,
-              height: 'auto',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: 350,
+              height: 270,
             }}
           >
             <PieChartComponent
@@ -37,17 +38,19 @@ const PieCharts: React.FC = () => {
             />
           </Box>
         </Grid>
+
         {/* Chart 2 */}
-        <Grid item xs={12} sm={6} md={5}>
+        <Grid item xs={12} sm={6}>
           <Box
             sx={{
-              backgroundColor: 'white',
-              borderRadius: '10px',
+              backgroundColor: "white",
+              borderRadius: "10px",
               padding: 2,
-              height: 'auto',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: 350,
+              height: 270,
             }}
           >
             <PieChartComponent

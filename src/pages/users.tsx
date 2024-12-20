@@ -1,9 +1,9 @@
-import { Typography } from '@mui/material'
+import UserContainer from '../containers/users/input'
 
 const Users = () => {
   return (
     <div>
-    <Typography variant='h1'>users</Typography>
+      <UserContainer/>
     </div>
   )
 }

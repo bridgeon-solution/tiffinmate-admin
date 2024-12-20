@@ -9,54 +9,59 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ icon, number, text }) => {
   return (
+    // card
     <Box
-      height="30vh"
-      width="60vh"
       sx={{
-        borderRadius: "10px",
-        backgroundColor: "white",
-        margin: "10px", 
+        width: '300px',
+        height:"130px",
+        borderRadius: '10px',
+        backgroundColor: '#ffffff',
+        boxShadow: '0px 2px  10px rgba(0, 0, 0, 0.1)',
+        padding: '20px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '15px',
       }}
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
     >
+     
       <Box
         sx={{
-          padding: "40px",
+          backgroundColor: '#d5f5d3',
+          borderRadius: '50%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '60px',
+          height: '60px',
         }}
       >
-        <Box
+        {icon}  
+      </Box>
+
+      <Box>
+        <Typography
+          variant="h4"
           sx={{
-            backgroundColor: "#d5f5d3",
-            borderRadius: "50%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "60px",
-            height: "60px",
+            fontWeight: 'bold',
+            color: '#333',
           }}
         >
-          {icon}
-        </Box>
-      </Box>
-      <Box>
-        <Typography variant="h3" sx={{ fontWeight: "bold", color: "#e6852c" }}>
           {number}
         </Typography>
         <Typography
           variant="body2"
-          color="textSecondary"
           sx={{
-            fontSize: "18px",
-            textAlign: "center",
+            color: '#666',
+            fontSize: '16px',
           }}
         >
           {text}
         </Typography>
+        
       </Box>
     </Box>
   );
 };
 
 export default Card;
+
