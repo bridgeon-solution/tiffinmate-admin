@@ -1,35 +1,66 @@
-import React, { useEffect, useState } from 'react';
-import ProviderDetails from '../../services/provider';
-import Providertable from '../../components/provider/providertable';
-import { toast } from 'react-toastify';
+import React, { useEffect, useState } from "react";
+import { PaginationProvider } from "../../services/provider";
+import Providertable from "../../components/provider/providertable";
+import { toast } from "react-toastify";
+import { BlockUnblockProvider } from "../../services/provider";
 
 interface Provider {
-  id:string,
+  id: string;
   email: string;
-  username: string;
+  user_name: string;
+  verification_status: string;
+  is_blocked: boolean;
 }
-
 const VendorContainer: React.FC = () => {
   const [providerData, setProviderData] = useState<Provider[] | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [search, setSearch] = useState<string>("");
+  const [filter, setFilter] = useState<string>("all");
+  const FetchUser = async (page: number, search: string, filter: string) => {
+    try {
+      const response = await PaginationProvider(page, search, filter);
+      if(response&&response.result){
+        setProviderData(response.result);
+      }
+      setProviderData(null);
+
+      
+    } catch (error) {
+      toast.error("Failed to fetch pagination data");
+    }
+  };
+
+  const handleBlockUnblock = async (id: string) => {
+    try {
+      await BlockUnblockProvider(id);
+      FetchUser(currentPage, search, filter);
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+    }
+  };
+
+  const handlePageChange = async (page: number) => {
+    setCurrentPage(page);
+    FetchUser(page, search, filter);
+  };
 
   useEffect(() => {
-    const fetchProvider = async () => {
-      try {
-        const response = await ProviderDetails();
-        setProviderData(response); 
-      } catch (error) {
-        toast.error("something went wrong")
-      }
-    };
-    fetchProvider();
-  }, []);
+    FetchUser(1, search, filter);
+  }, [filter, search]);
 
   return (
     <div>
       {providerData ? (
-        <Providertable provider={providerData} /> 
+        <Providertable
+          provider={providerData}
+          setSearch={setSearch}
+          setFilter={setFilter}
+          handleBlockUnblock={handleBlockUnblock}
+          handlePageChange={handlePageChange}
+        />
       ) : (
-        <div>Loading...</div> 
+        <div>No users found</div>
       )}
     </div>
   );
