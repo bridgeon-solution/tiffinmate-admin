@@ -7,7 +7,7 @@ import { BlockUnblockProvider } from "../../services/provider";
 interface Provider {
   id: string;
   email: string;
-  username: string;
+  user_name: string;
   verification_status: string;
   is_blocked: boolean;
 }
@@ -19,8 +19,12 @@ const VendorContainer: React.FC = () => {
   const FetchUser = async (page: number, search: string, filter: string) => {
     try {
       const response = await PaginationProvider(page, search, filter);
+      if(response&&response.result){
+        setProviderData(response.result);
+      }
+      setProviderData(null);
 
-      setProviderData(response.result);
+      
     } catch (error) {
       toast.error("Failed to fetch pagination data");
     }
