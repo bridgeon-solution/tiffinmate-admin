@@ -20,12 +20,15 @@ const UserContainer: React.FC = () => {
   const [filter, setFilter] = useState<string>("all");
   const [openModal,setOpenModal]=useState<boolean>(false);
   const [selectedUserId,setSelectedUserId]=useState<string|null>(null);
+  const [totalProviders,setTotalProviders]=useState<number>(1);
 
   const FetchUser = async (page: number, search: string, filter: string) => {
     try {
       const response = await PaginationUser(page, search, filter);
-
-      setUserData(response.result);
+      if(response&&response.result){
+      setUserData(response.result.users);
+      setTotalProviders(response.result.totalCount)
+      }
     } catch (error) {
       toast.error("Failed to fetch pagination data");
     } finally {
@@ -69,6 +72,7 @@ const UserContainer: React.FC = () => {
           handleBlockUnblock={handleBlockUnblock}
           handlePageChange={handlePageChange}
           handleDetails={handleDetails}
+          totalProviders={totalProviders}
         />
       ) : (
         <div>No users found</div>

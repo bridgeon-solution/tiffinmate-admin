@@ -22,7 +22,7 @@ export const PaginationUser = async (
 ) => {
   try {
     const response = await axiosInstance.get(
-      `/User?pageSize=4&page=${page}&search=${search}&filter=${filter}`
+      `/User?pageSize=3&page=${page}&search=${search}&filter=${filter}`
     );
 
     if (response && response.data && response.data.result) {
