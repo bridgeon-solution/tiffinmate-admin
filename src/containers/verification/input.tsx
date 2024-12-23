@@ -23,11 +23,18 @@ const ProviderContainer: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
     const [, setLoading] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
+    const [totalProviders,setTotalProviders]=useState<number>(1);
+  
 
   const FetchUser = async (page: number, search: string) => {
     try {
       const response = await PaginationVerification(page, search);
-      setProviderData(response.result);
+      if(response&&response.result){
+        
+        setProviderData(response.result.providers);
+        setTotalProviders(response.result.totalCount)
+      
+      }
     } catch (error) {
       toast.error("Failed to fetch pagination data");
     }
@@ -103,6 +110,7 @@ const ProviderContainer: React.FC = () => {
           setSearch={setSearch}
           handlePageChange={handlePageChange}
           handleDownloadCertificate={handleDownloadCertificate}
+          totalProviders={totalProviders}
         />
       ) : (
         <div>Loading...</div>

@@ -83,7 +83,24 @@ export const PaginationVerification = async (page: number, search: string) => {
     const response = await axiosInstance.get(
       `/Provider?pageSize=${3}&page=${page}&search=${search}&verifystatus=pending`
     );
+  
+    
+    if (response && response.data && response.data.result) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    throw error;
+  }
+};
 
+export const ProviderDetails = async (id:string) => {
+  try {
+    const response = await axiosInstance.get(
+      `/Provider/${id}/details`
+    );
+  
+    
     if (response && response.data && response.data.result) {
       return response.data;
     }

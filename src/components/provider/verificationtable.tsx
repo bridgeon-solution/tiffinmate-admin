@@ -31,6 +31,7 @@ interface VerificationtableProps {
   handlePageChange: (page: number) => void;
   setSearch: (search: string) => void;
   handleDownloadCertificate:(certificate:string,name:string)=>void;
+  totalProviders:number
 }
 
 const Verificationtable: React.FC<VerificationtableProps> = ({
@@ -39,7 +40,8 @@ const Verificationtable: React.FC<VerificationtableProps> = ({
   RejectVerification,
   handlePageChange,
   setSearch,
-  handleDownloadCertificate
+  handleDownloadCertificate,
+  totalProviders
 }) => {
   const [_, setSearchQuery] = useState<string>("");
   
@@ -48,6 +50,15 @@ const Verificationtable: React.FC<VerificationtableProps> = ({
     setSearch(newSearch);
     setSearchQuery(newSearch);
   };
+  let totalPage=5
+ if(totalProviders%3==0){
+   totalPage=totalProviders/3
+
+ }
+ else{
+  totalPage=Math.ceil(totalProviders/3)
+
+ }
 
   const handleViewCertificate = (certificate: string) => {
     window.open(certificate, "_self");
@@ -149,7 +160,7 @@ const Verificationtable: React.FC<VerificationtableProps> = ({
           )}
         </tbody>
       </StyledTable>
-      <PaginationRounded totalPages={8} onPageChange={handlePageChange} />
+      <PaginationRounded totalPages={totalPage} onPageChange={handlePageChange} />
 
     </Box>
   );

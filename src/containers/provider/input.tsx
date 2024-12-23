@@ -16,13 +16,16 @@ const VendorContainer: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const [filter, setFilter] = useState<string>("all");
+  const [totalProviders,setTotalProviders]=useState<number>(1);
   const FetchUser = async (page: number, search: string, filter: string) => {
     try {
       const response = await PaginationProvider(page, search, filter);
       if(response&&response.result){
-        setProviderData(response.result);
+        
+        setProviderData(response.result.providers);
+        setTotalProviders(response.result.totalCount)
+      
       }
-      setProviderData(null);
 
       
     } catch (error) {
@@ -58,6 +61,7 @@ const VendorContainer: React.FC = () => {
           setFilter={setFilter}
           handleBlockUnblock={handleBlockUnblock}
           handlePageChange={handlePageChange}
+          totalProviders={totalProviders}
         />
       ) : (
         <div>No users found</div>

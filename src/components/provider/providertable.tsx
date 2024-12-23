@@ -11,6 +11,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import FilterBox from "../../atoms/filtrer";
 import PaginationRounded from "../../atoms/pagination";
+import { useNavigate } from "react-router-dom";
 
 interface Provider {
   email: string;
@@ -26,6 +27,7 @@ interface ProviderTableProps {
   handlePageChange: (page: number) => void;
   setSearch: (search: string) => void;
   setFilter: (filter: string) => void;
+  totalProviders:number;
 }
 
 const Providertable: React.FC<ProviderTableProps> = ({
@@ -34,7 +36,9 @@ const Providertable: React.FC<ProviderTableProps> = ({
   handlePageChange,
   setFilter,
   setSearch,
+  totalProviders
 }) => {
+  const navigate=useNavigate();
   const [status, setStatus] = useState<string>("");
   const [_, setSearchQuery] = useState<string>("");
 
@@ -55,6 +59,21 @@ const Providertable: React.FC<ProviderTableProps> = ({
     setSearch(newSearch);
     setSearchQuery(newSearch);
   };
+  let totalPage=5
+ if(totalProviders%3==0){
+   totalPage=totalProviders/3
+
+ }
+ else{
+  totalPage=Math.ceil(totalProviders/3)
+
+ }
+ const handleDetailsPage = (vendor:Provider) => {
+  navigate(`/food-providers/details/${vendor.id}`,{state:vendor});
+};
+ 
+
+  
 
   return (
     <Box
@@ -168,7 +187,7 @@ const Providertable: React.FC<ProviderTableProps> = ({
                 </td>
                 <td>5.5</td>
                 <td>
-                  <RemoveRedEyeOutlinedIcon />
+                  <RemoveRedEyeOutlinedIcon onClick={()=>handleDetailsPage(vendor)} sx={{cursor:"pointer"}} />
                 </td>
               </tr>
             ))
@@ -180,7 +199,7 @@ const Providertable: React.FC<ProviderTableProps> = ({
         </tbody>
       </StyledTable>
 
-      <PaginationRounded totalPages={8} onPageChange={handlePageChange} />
+      <PaginationRounded totalPages={totalPage} onPageChange={handlePageChange} />
     </Box>
   );
 };

@@ -30,15 +30,11 @@ const Userdetails: React.FC<UserDetailsProps> = ({ userId, handleClose }) => {
         const response = await UserDetailsById(userId);
         if(response&&response.result){
           setUserDetails(response.result);
-        }
-        setUserDetails(null); 
-        
+        }  
       } catch (error) {
         toast.error("error fetching details of users")
       }
     };
-    
-
     fetchUserDetails();
   }, [userId]);
 

@@ -25,6 +25,7 @@ interface UserTableProps {
   setSearch: (search: string) => void;
   setFilter: (filter: string) => void;
   handleDetails: (id: string) => void;
+  totalProviders:number
 }
 
 const Usertable: React.FC<UserTableProps> = ({
@@ -34,6 +35,7 @@ const Usertable: React.FC<UserTableProps> = ({
   setSearch,
   setFilter,
   handleDetails,
+  totalProviders
 }) => {
   const [status, setStatus] = useState<string>("");
   const [_, setSearchQuery] = useState<string>("");
@@ -49,6 +51,17 @@ const Usertable: React.FC<UserTableProps> = ({
     setSearchQuery(newSearchQuery);
     setSearch(newSearchQuery);
   };
+
+  let totalPage=5
+ if(totalProviders%3==0){
+   totalPage=totalProviders/3
+
+ }
+ else{
+  totalPage=Math.ceil(totalProviders/3)
+
+ }
+
 
   const options = [
     { value: "true", label: "Blocked" },
@@ -186,7 +199,7 @@ const Usertable: React.FC<UserTableProps> = ({
           )}
         </tbody>
       </StyledTable>
-      <PaginationRounded totalPages={8} onPageChange={handlePageChange} />
+      <PaginationRounded totalPages={totalPage} onPageChange={handlePageChange} />
     </Box>
   );
 };
