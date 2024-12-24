@@ -1,7 +1,5 @@
 import axiosInstance from "../api";
 
-
-
 export const VerificationApprove = async (id: string) => {
   try {
     const response = await axiosInstance.post(
@@ -83,8 +81,7 @@ export const PaginationVerification = async (page: number, search: string) => {
     const response = await axiosInstance.get(
       `/Provider?pageSize=${3}&page=${page}&search=${search}&verifystatus=pending`
     );
-  
-    
+
     if (response && response.data && response.data.result) {
       return response.data;
     }
@@ -94,13 +91,34 @@ export const PaginationVerification = async (page: number, search: string) => {
   }
 };
 
-export const ProviderDetails = async (id:string) => {
+export const ProviderDetails = async (id: string) => {
   try {
-    const response = await axiosInstance.get(
-      `/Provider/${id}/details`
-    );
-  
-    
+    const response = await axiosInstance.get(`/Provider/${id}/details`);
+
+    if (response && response.data && response.data.result) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const ProviderReviews = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(`/Provider/${id}/reviews`);
+    if (response && response.data && response.data.result) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const ProviderMenus = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(`/FoodItem/provider?id=${id}`);
     if (response && response.data && response.data.result) {
       return response.data;
     }

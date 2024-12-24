@@ -16,18 +16,14 @@ const VendorContainer: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const [filter, setFilter] = useState<string>("all");
-  const [totalProviders,setTotalProviders]=useState<number>(1);
+  const [totalProviders, setTotalProviders] = useState<number>(1);
   const FetchUser = async (page: number, search: string, filter: string) => {
     try {
       const response = await PaginationProvider(page, search, filter);
-      if(response&&response.result){
-        
+      if (response && response.result) {
         setProviderData(response.result.providers);
-        setTotalProviders(response.result.totalCount)
-      
+        setTotalProviders(response.result.totalCount);
       }
-
-      
     } catch (error) {
       toast.error("Failed to fetch pagination data");
     }
@@ -64,7 +60,7 @@ const VendorContainer: React.FC = () => {
           totalProviders={totalProviders}
         />
       ) : (
-        <div>No users found</div>
+        <div>Loading...</div>
       )}
     </div>
   );
