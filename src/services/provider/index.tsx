@@ -118,7 +118,7 @@ export const ProviderReviews = async (id: string) => {
 
 export const ProviderMenus = async (id: string) => {
   try {
-    const response = await axiosInstance.get(`/FoodItem/provider?id=${id}`);
+    const response = await axiosInstance.get(`/FoodItem/providerid/${id}`);
     if (response && response.data && response.data.result) {
       return response.data;
     }
@@ -127,3 +127,17 @@ export const ProviderMenus = async (id: string) => {
     throw error;
   }
 };
+
+export const TotalProvider = async () => {
+  try {
+    const response = await axiosInstance.get('/Provider');
+    if (response && response.data && response.data.result) {
+      return response.data.result.totalCount;
+    }
+    return null;
+  } catch (error) {
+    throw error;
+  }
+};
+
+

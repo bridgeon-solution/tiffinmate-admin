@@ -26,7 +26,9 @@ const PieCard: React.FC = () => {
         mt: 4,
       }}
     >
-      <Card sx={{ minWidth: 470, boxShadow: 3 }}>
+      <Card sx={{  minWidth: 470,
+          boxShadow: 3,
+          overflowX: { xs: "auto", sm: "visible" },}}>
         <CardContent>
           <Typography
             variant="h6"

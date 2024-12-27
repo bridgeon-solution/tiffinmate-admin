@@ -69,7 +69,7 @@ const Providerdetailspage: React.FC = () => {
     };
     fetchMenuDetails();
   }, [id]);
-  console.log(providerMenu);
+  
 
   const handleViewCertificate = (certificate: string) => {
     window.open(certificate, "_self");
@@ -103,14 +103,14 @@ const Providerdetailspage: React.FC = () => {
           {provider.user_name}
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={4} md={2} display="flex" justifyContent="center">
             <img
               src={providerDetails?.image}
               alt="profile"
-              style={{ width: "100%", height: "80%", borderRadius: "50%" }}
+              style={{ width: "80%",  height: "70%", borderRadius: "50%" }}
             />
           </Grid>
-          <Grid item xs={12} sm={10}>
+          <Grid item xs={12} sm={8} md={10}>
             <Box
               sx={{
                 border: "1px solid #e0e0e0",
@@ -127,53 +127,69 @@ const Providerdetailspage: React.FC = () => {
                 direction="row"
                 justifyContent="space-between"
               >
-                <Typography variant="body1" color="#808080">
-                  <strong>Name:</strong>
-                  <br /> {provider.user_name}
-                </Typography>
-                <Typography variant="body1" color="#808080">
-                  <strong>Email:</strong> <br />
-                  {provider.email}
-                </Typography>
-                <Typography variant="body1" color="#808080">
-                  <strong>Phone No:</strong>
-                  <br /> +91 {providerDetails?.phone_no}
-                </Typography>
-                <Button
-                  sx={{ cursor: "pointer" }}
-                  onClick={() => handleDetails(id || "")}
-                >
-                  Reviews
-                </Button>
+                <Grid container spacing={2}>
+            <Grid item xs={12} sm={6} md={3}>
+            <Typography variant="body1" color="#808080" sx={{ marginBottom: 1 }}>
+                <strong>Name:</strong>
+                <br /> {provider.user_name}
+              </Typography>
+            </Grid>
+            
+            <Grid item xs={12} sm={6} md={3}>
+            <Typography variant="body1" color="#808080" sx={{ marginBottom: 1 }}>
+                <strong>Email:</strong>
+                <br />
+                <span style={{ wordWrap: "break-word" }}>{provider.email}</span>
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="body1" color="#808080">
+                <strong>Phone No:</strong>
+                <br /> +91 {providerDetails?.phone_no}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3} display="flex" alignItems="center">
+              <Button
+                sx={{ cursor: "pointer" }}
+                onClick={() => handleDetails(id || "")}
+              >
+                Reviews
+              </Button>
+            </Grid>
+            </Grid>
               </Grid>
               <br />
-              <Grid
-                display="flex"
-                direction="row"
-                justifyContent="space-between"
-              >
-                <Typography variant="body1" color="#808080">
-                  <strong>Address:</strong>
-                  <br /> {providerDetails?.address}
-                </Typography>
-                <Typography variant="body1" color="#808080">
-                  <strong>Service Area:</strong> <br />{" "}
-                  {providerDetails?.address}
-                </Typography>
-                <Typography variant="body1" color="#808080">
-                  <strong>Restaurant Name:</strong> <br />{" "}
-                  {providerDetails?.resturent_name}
-                </Typography>
-                <Typography variant="body1" color="#808080">
-                  <strong>Health Certification:</strong>
-                  <br />
-
-                  <RemoveRedEyeOutlinedIcon
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleViewCertificate(provider.certificate)}
-                    sx={{ color: "#6464FF" }}
-                  />
-                </Typography>
+              
+               <Grid container spacing={2}>
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="body1" color="#808080">
+                <strong>Address:</strong>
+                <br /> {providerDetails?.address}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="body1" color="#808080">
+                <strong>Service Area:</strong>
+                <br /> {providerDetails?.address}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="body1" color="#808080">
+                <strong>Restaurant Name:</strong>
+                <br /> {providerDetails?.resturent_name}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3} display="flex" alignItems="center">
+              <Typography variant="body1" color="#808080">
+                <strong>Health Certification:</strong>
+                <br />
+                <RemoveRedEyeOutlinedIcon
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleViewCertificate(provider.certificate)}
+                  sx={{ color: "#6464FF" }}
+                />
+              </Typography>
+            </Grid>
               </Grid>
             </Box>
           </Grid>
@@ -210,7 +226,7 @@ const Providerdetailspage: React.FC = () => {
                         {item.food_name}
                         <Avatar
                           src={item.image}
-                          sx={{ height: "80", width: "80", marginBottom: 3 }}
+                          sx={{ height: "50px", width: "50px", marginBottom: 3 }}
                         ></Avatar>
                       </td>
                       <td>{item.category_name}</td>

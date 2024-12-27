@@ -49,3 +49,19 @@ export const UserDetailsById = async (id:string) => {
     throw error;
   }
 };
+
+
+export const TotalUsers = async () => {
+  try {
+    const response = await axiosInstance.get(
+      '/User'
+    );
+
+    if (response && response.data && response.data.result) {
+      return response.data.result.totalCount;
+    }
+    return null;
+  } catch (error) {
+    throw error;
+  }
+};

@@ -10,16 +10,23 @@ const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
 
 export default function OrdersAndRevenueComparison() {
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
-      <Card sx={{ minWidth: 600, boxShadow: 3 }}>
+    <Box sx={{ display: "flex", justifyContent: "center", p: 2,
+       }}>
+      <Card sx={{  boxShadow: 3,maxWidth: 900,"@media (max-width: 768px)": {
+            maxWidth: "95%",
+          }, }}>
         <CardContent>
           <Typography
             variant="h6"
             component="div"
-            sx={{ mb: 2, color: "#e65100" }}
+            sx={{ mb: 2, color: "#e65100",textAlign: "center" }}
           >
             Orders vs Revenue (Monthly)
           </Typography>
+          <Box sx={{
+              overflowX: "auto", 
+              width: "100%",
+            }}>
           <LineChart
             width={500}
             height={300}
@@ -37,6 +44,7 @@ export default function OrdersAndRevenueComparison() {
             ]}
             xAxis={[{ scaleType: "point", data: months }]}
           />
+          </Box>
         </CardContent>
       </Card>
     </Box>

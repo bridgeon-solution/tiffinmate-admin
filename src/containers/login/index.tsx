@@ -29,6 +29,8 @@ const LoginContainer: React.FC = () => {
         if (response.data.message == "Login Successfull") {
           navigate("dashboard");
           toast.success("Admin login succesfully");
+          localStorage.setItem("id",response.data.result.id)
+          localStorage.setItem("token",response.data.result.token)
         } else {
           toast.warning(response.data.error_message);
         }

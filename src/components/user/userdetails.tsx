@@ -140,7 +140,8 @@ const Userdetails: React.FC<UserDetailsProps> = ({ userId, handleClose }) => {
           <Typography variant="body2" color="#6B7280" mb={2}>
             Registration Date:
             <br />
-            <strong>{userDetails?.created_at}</strong>
+            <strong> {new Date(userDetails?.created_at).toLocaleDateString()}{" "}
+            </strong>
           </Typography>
         </Grid>
         <Divider />

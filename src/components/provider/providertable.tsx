@@ -59,7 +59,7 @@ const Providertable: React.FC<ProviderTableProps> = ({
     setSearch(newSearch);
     setSearchQuery(newSearch);
   };
-  let totalPage=5
+  let totalPage=0
  if(totalProviders%3==0){
    totalPage=totalProviders/3
 
@@ -79,10 +79,11 @@ const Providertable: React.FC<ProviderTableProps> = ({
     <Box
       sx={{
         backgroundColor: "white",
-        padding: 4,
-
+        padding: { xs: 2, sm: 4 }, 
+        marginTop: { xs: 4, sm: 6 },
+        boxShadow: 2,
         borderRadius: "20px",
-        marginTop: 6,
+        overflowX: "auto",
       }}
     >
       <StyledTable>

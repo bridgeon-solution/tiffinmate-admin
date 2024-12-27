@@ -61,11 +61,15 @@ const Providerreview: React.FC<ProviderDetailsProps> = ({
                 boxShadow: 3,
                 borderRadius: 2,
                 padding: 2,
+                width: "70",
+                height: 150, 
                 transition: "transform 0.3s ease, box-shadow 0.3s ease",
                 "&:hover": {
                   transform: "scale(1.05)",
                   boxShadow: 8,
                 },
+                maxHeight: 400, 
+                overflowY: "auto",
               }}
             >
               <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -90,10 +94,13 @@ const Providerreview: React.FC<ProviderDetailsProps> = ({
                   {reviews.created_at && (
                     <Typography variant="body2" color="text.secondary">
                       {new Date(reviews.created_at).toLocaleDateString()}{" "}
-                      {/* Formats the date */}
+                      
                     </Typography>
                   )}
-                  <Typography variant="body2">"{reviews.review}"</Typography>
+                  <Typography variant="body2"
+                   sx={{
+                    display: "block",
+                  }}>"{reviews.review}"</Typography>
                 </Box>
               </Box>
             </Card>

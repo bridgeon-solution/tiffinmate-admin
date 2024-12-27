@@ -20,6 +20,7 @@ import FastfoodIcon from "@mui/icons-material/Fastfood";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import DrawerHeader from "../drawer";
+import ConfirmModal from "../confirmboxmodal";
 
 
 const drawerWidth = 240;
@@ -103,24 +104,25 @@ const menuItems = [
 ];
 
 export default function NavBar({ children }: { children: React.ReactNode }) {
-  // const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+  const handleLogoutOpen = () => setLogoutModalOpen(true);
+  const handleLogoutClose = () => setLogoutModalOpen(false);
   const navigate = useNavigate();
 
-  // const handleDrawerOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleDrawerClose = () => {
-  //   setOpen(false);
-  // };
 
   const handleMenuItemClick = (index: number) => {
     setActiveIndex(index);
     navigate(menuItems[index].path);
   };
 
+  const handleLogoutConfirm = () => {
+    localStorage.clear();
+    navigate('/')
+    setLogoutModalOpen(false);
+    
+  };
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -173,10 +175,10 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
                   backgroundColor:
                     activeIndex === index ? "#FF943126" : "inherit",
                   "&:hover": {
-                    backgroundColor: "#FF943126", // Red background on hover
+                    backgroundColor: "#FF943126", 
                   },
                   borderLeft:
-                    activeIndex === index ? "3px solid #e6852c" : "none", // Left border when active
+                    activeIndex === index ? "3px solid #e6852c" : "none", 
                 }}
               >
                 <ListItemIcon
@@ -223,9 +225,14 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
           ></Box>
         </Box>
 
-        <LogoutOutlinedIcon
-          sx={{ position: "absolute", top: 20, right: 30, fontSize: 25 }}
+        <LogoutOutlinedIcon onClick={handleLogoutOpen}
+          sx={{ position: "absolute", top: 20, right: 30, fontSize: 25,cursor:"pointer" }}
         />
+         <ConfirmModal
+        open={logoutModalOpen}
+        onClose={handleLogoutClose}
+        onConfirm={handleLogoutConfirm}
+      />
         {/* <DrawerHeader /> */}
         {children}
       </Box>
