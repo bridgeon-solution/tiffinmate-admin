@@ -161,6 +161,7 @@ const Userdetails: React.FC<UserDetailsProps> = ({ userId, handleClose }) => {
             <Typography variant="body2" color="#6B7280">
               Start Date:
               <br />
+              
               <strong> 10/01/2022</strong>
             </Typography>
             <Typography variant="body2" color="#6B7280">

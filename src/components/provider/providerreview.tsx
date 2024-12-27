@@ -38,7 +38,6 @@ const Providerreview: React.FC<ProviderDetailsProps> = ({
     };
     fetchUserDetails();
   }, [providerId]);
-  console.log(reviewDetails);
 
   return (
     <Grid container spacing={3}>
