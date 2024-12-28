@@ -1,52 +1,52 @@
-import { BarChart } from '@mui/x-charts/BarChart';
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import { LineChart } from "@mui/x-charts/LineChart";
 
-const dataset = [
-  { month: 'January', seoul: 30 },
-  { month: 'February', seoul: 20 },
-  { month: 'March', seoul: 50 },
-  { month: 'April', seoul: 40 },
-  { month: 'may', seoul: 40 },
-  { month: 'June', seoul: 40 },
-  { month: 'July', seoul: 40 },
-  { month: 'Auguest', seoul: 40 },
-  { month: 'Septembar', seoul: 40 },
-  { month: 'October', seoul: 40 },
-  { month: 'November', seoul: 40 },
-  { month: 'December', seoul: 70 },
-];
+const ordersData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
+const revenueData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
 
-export default function Barchart() {
+export default function OrdersAndRevenueComparison() {
   return (
-    <div style={{ width: '100%' }}>
-      <BarChart
-        dataset={dataset}
-        xAxis={[
-          {
-            scaleType: 'band',
-            dataKey: 'month',
-            tickPlacement: 'middle', // Adjust based on preference
-            tickLabelPlacement: 'middle',
-          },
-        ]}
-        yAxis={[
-          {
-            label: 'Total revenue',
-          },
-        ]}
-        series={[
-          {
-            dataKey: 'seoul',
-            label: 'Total revenue',
-            valueFormatter: (value: number | null) => (value !== null ? `${value} $` : ''),
-          },
-        ]}
-        height={300}
-        sx={{
-          [`& .MuiChartsAxis-root.directionY .MuiChartsAxis-label`]: {
-            transform: 'translateX(-10px)',
-          },
-        }}
-      />
-    </div>
+    <Box sx={{ display: "flex", justifyContent: "center", p: 2,
+       }}>
+      <Card sx={{  boxShadow: 3,maxWidth: 900,"@media (max-width: 768px)": {
+            maxWidth: "95%",
+          }, }}>
+        <CardContent>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ mb: 2, color: "#e65100",textAlign: "center" }}
+          >
+            Orders vs Revenue (Monthly)
+          </Typography>
+          <Box sx={{
+              overflowX: "auto", 
+              width: "100%",
+            }}>
+          <LineChart
+            width={500}
+            height={300}
+            series={[
+              {
+                data: ordersData,
+                label: "Orders",
+                color: "#ffa726",
+              },
+              {
+                data: revenueData,
+                label: "Revenue",
+                color: "red",
+              },
+            ]}
+            xAxis={[{ scaleType: "point", data: months }]}
+          />
+          </Box>
+        </CardContent>
+      </Card>
+    </Box>
   );
 }

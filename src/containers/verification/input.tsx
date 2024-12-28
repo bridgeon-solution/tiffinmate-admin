@@ -48,7 +48,7 @@ const ProviderContainer: React.FC = () => {
       const response = await VerificationApprove(id);
       FetchUser(currentPage,search)
       if (response.status == "success") {
-        toast.success(response.result);
+        toast.success("Password sended succesfully.");
       } else {
         toast.warning(response.error_message);
       }

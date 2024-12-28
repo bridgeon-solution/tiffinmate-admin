@@ -68,9 +68,11 @@ const Verificationtable: React.FC<VerificationtableProps> = ({
     <Box
       sx={{
         backgroundColor: "white",
-        padding: 4,
+        padding: { xs: 2, sm: 4 }, 
+        marginTop: { xs: 4, sm: 6 },
+        boxShadow: 2,
         borderRadius: "20px",
-        marginTop: 6,
+        overflowX: "auto",
       }}
     >
       <StyledTable>

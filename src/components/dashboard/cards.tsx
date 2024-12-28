@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Box } from "@mui/material";
 import Card from "../../atoms/card";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
@@ -6,16 +6,37 @@ import PeopleIcon from "@mui/icons-material/People";
 import PieChartIcon from "@mui/icons-material/PieChart";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import StoreIcon from "@mui/icons-material/Store";
-import PieCharts from "./piecharts";
+import { TotalProvider } from "../../services/provider";
+import { TotalUsers } from "../../services/user";
+
 
 const Cards: React.FC = () => {
+  const [totalProvider,setTotalProvider]=useState(0);
+const FetchProviders=async()=>{
+  const totalProviders=await TotalProvider();
+    setTotalProvider(totalProviders);
+
+}
+
+  const [totalUsers,setTotalUsers]=useState(0);
+const FetchUsers=async()=>{
+  const totalUsers=await TotalUsers();
+    setTotalUsers(totalUsers);
+
+}
+
+
+useEffect(()=>{
+  FetchProviders()
+  FetchUsers()
+},[])
+  
   return (
     <Grid
       container
       spacing={2}
-      sx={{
-        padding: "20px",
-      }}
+      mt="10px"
+      
     >
       {/* card-1 */}
       <Grid item xs={12} sm={6} md={4}>
@@ -33,7 +54,7 @@ const Cards: React.FC = () => {
       <Grid item xs={12} sm={6} md={4}>
         <Card
           icon={<PeopleIcon style={{ color: "#3f51b5", fontSize: "30px" }} />}
-          number={60}
+          number={totalUsers}
           text="Total Users"
         />
       </Grid>
@@ -46,21 +67,20 @@ const Cards: React.FC = () => {
         />
       </Grid>
 
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12}>
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
+            flexWrap: "wrap",
+            justifyContent: "center",
             gap: 2,
           }}
         >
-          {/* card-4 */}
           <Card
             icon={<StoreIcon style={{ color: "#ff9800", fontSize: "30px" }} />}
-            number={50}
+            number={totalProvider}
             text="Total Providers"
           />
-          {/* card-5 */}
           <Card
             icon={
               <LocalShippingIcon
@@ -70,16 +90,6 @@ const Cards: React.FC = () => {
             number={85}
             text="Total Delivered"
           />
-        </Box>
-      </Grid>
-
-      <Grid item xs={12} sm={6} md={4}>
-        <Box
-          sx={{
-            display: "flex",
-          }}
-        >
-          <PieCharts />
         </Box>
       </Grid>
     </Grid>
