@@ -1,7 +1,5 @@
 import axiosInstance from "../api";
 
-
-
 export const BlockUnblockUser = async (id: string) => {
   try {
     const response = await axiosInstance.patch(`/User/block?id=${id}`);
@@ -18,11 +16,12 @@ export const BlockUnblockUser = async (id: string) => {
 export const PaginationUser = async (
   page: number,
   search: string,
-  filter: string
+  filter: string,
+  selectedValue: number
 ) => {
   try {
     const response = await axiosInstance.get(
-      `/User?pageSize=3&page=${page}&search=${search}&filter=${filter}`
+      `/User?pageSize=${selectedValue}&page=${page}&search=${search}&filter=${filter}`
     );
 
     if (response && response.data && response.data.result) {
@@ -34,12 +33,9 @@ export const PaginationUser = async (
   }
 };
 
-
-export const UserDetailsById = async (id:string) => {
+export const UserDetailsById = async (id: string) => {
   try {
-    const response = await axiosInstance.get(
-      `/User/id?id=${id}`
-    );
+    const response = await axiosInstance.get(`/User/id?id=${id}`);
 
     if (response && response.data && response.data.result) {
       return response.data;
@@ -49,13 +45,10 @@ export const UserDetailsById = async (id:string) => {
     throw error;
   }
 };
-
 
 export const TotalUsers = async () => {
   try {
-    const response = await axiosInstance.get(
-      '/User'
-    );
+    const response = await axiosInstance.get("/User");
 
     if (response && response.data && response.data.result) {
       return response.data.result.totalCount;
