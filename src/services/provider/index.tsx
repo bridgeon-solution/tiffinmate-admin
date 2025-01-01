@@ -60,11 +60,13 @@ export const SearchedProvider = async () => {
 export const PaginationProvider = async (
   page: number,
   search: string,
-  filter: string
+  filter: string,
+  selectedValue: number
 ) => {
   try {
+
     const response = await axiosInstance.get(
-      `/Provider?pageSize=${3}&page=${page}&search=${search}&filter=${filter}&verifystatus=approved`
+      `/Provider?pageSize=${selectedValue}&page=${page}&search=${search}&filter=${filter}&verifystatus=approved`
     );
 
     if (response && response.data && response.data.result) {
@@ -76,10 +78,14 @@ export const PaginationProvider = async (
   }
 };
 
-export const PaginationVerification = async (page: number, search: string) => {
+export const PaginationVerification = async (
+  page: number,
+  search: string,
+  selectedValue: number
+) => {
   try {
     const response = await axiosInstance.get(
-      `/Provider?pageSize=${3}&page=${page}&search=${search}&verifystatus=pending`
+      `/Provider?pageSize=${selectedValue}&page=${page}&search=${search}&verifystatus=pending`
     );
 
     if (response && response.data && response.data.result) {
@@ -130,7 +136,7 @@ export const ProviderMenus = async (id: string) => {
 
 export const TotalProvider = async () => {
   try {
-    const response = await axiosInstance.get('/Provider');
+    const response = await axiosInstance.get("/Provider");
     if (response && response.data && response.data.result) {
       return response.data.result.totalCount;
     }
@@ -139,5 +145,3 @@ export const TotalProvider = async () => {
     throw error;
   }
 };
-
-

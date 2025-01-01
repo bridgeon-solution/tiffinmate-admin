@@ -1,5 +1,11 @@
 import React from "react";
-import { Box, Grid, Typography, SelectChangeEvent } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Typography,
+  SelectChangeEvent,
+  MenuItem,
+} from "@mui/material";
 import { useState } from "react";
 import { StyledTable } from "../../atoms/table";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
@@ -12,6 +18,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FilterBox from "../../atoms/filtrer";
 import PaginationRounded from "../../atoms/pagination";
 import { useNavigate } from "react-router-dom";
+import { Select } from "@mui/material";
 
 interface Provider {
   email: string;
@@ -25,9 +32,11 @@ interface ProviderTableProps {
   provider: Provider[];
   handleBlockUnblock: (id: string) => void;
   handlePageChange: (page: number) => void;
+  handleSelectChange: (event: SelectChangeEvent<number>) => void;
   setSearch: (search: string) => void;
   setFilter: (filter: string) => void;
-  totalProviders:number;
+  totalProviders: number;
+  selectedValue: number;
 }
 
 const Providertable: React.FC<ProviderTableProps> = ({
@@ -36,9 +45,11 @@ const Providertable: React.FC<ProviderTableProps> = ({
   handlePageChange,
   setFilter,
   setSearch,
-  totalProviders
+  totalProviders,
+  handleSelectChange,
+  selectedValue,
 }) => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [status, setStatus] = useState<string>("");
   const [_, setSearchQuery] = useState<string>("");
 
@@ -53,33 +64,27 @@ const Providertable: React.FC<ProviderTableProps> = ({
     { value: "false", label: "Active" },
     { value: "all", label: "All Providers" },
   ];
-  
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSearch = e.target.value;
     setSearch(newSearch);
     setSearchQuery(newSearch);
   };
-  let totalPage=0
- if(totalProviders%3==0){
-   totalPage=totalProviders/3
-
- }
- else{
-  totalPage=Math.ceil(totalProviders/3)
-
- }
- const handleDetailsPage = (vendor:Provider) => {
-  navigate(`/food-providers/details/${vendor.id}`,{state:vendor});
-};
- 
-
-  
+  let totalPage = 0;
+  if (totalProviders % selectedValue == 0) {
+    totalPage = totalProviders / selectedValue;
+  } else {
+    totalPage = Math.ceil(totalProviders / selectedValue);
+  }
+  const handleDetailsPage = (vendor: Provider) => {
+    navigate(`/food-providers/details/${vendor.id}`, { state: vendor });
+  };
 
   return (
     <Box
       sx={{
         backgroundColor: "white",
-        padding: { xs: 2, sm: 4 }, 
+        padding: { xs: 2, sm: 4 },
         marginTop: { xs: 4, sm: 6 },
         boxShadow: 2,
         borderRadius: "20px",
@@ -188,7 +193,10 @@ const Providertable: React.FC<ProviderTableProps> = ({
                 </td>
                 <td>5.5</td>
                 <td>
-                  <RemoveRedEyeOutlinedIcon onClick={()=>handleDetailsPage(vendor)} sx={{cursor:"pointer"}} />
+                  <RemoveRedEyeOutlinedIcon
+                    onClick={() => handleDetailsPage(vendor)}
+                    sx={{ cursor: "pointer" }}
+                  />
                 </td>
               </tr>
             ))
@@ -200,7 +208,42 @@ const Providertable: React.FC<ProviderTableProps> = ({
         </tbody>
       </StyledTable>
 
-      <PaginationRounded totalPages={totalPage} onPageChange={handlePageChange} />
+      <Box display="flex" gap={4} alignItems="center" mt={2}>
+        <PaginationRounded
+          totalPages={totalPage}
+          onPageChange={handlePageChange}
+        />
+        <Box display="flex" alignItems="center" gap={1}>
+          <Typography sx={{ fontWeight: "bold", fontSize: "14px" }}>
+            Show:
+          </Typography>
+          <Select
+            value={selectedValue}
+            onChange={handleSelectChange}
+            displayEmpty
+            sx={{
+              width: "150px",
+              height: "35px",
+              backgroundColor: "#f9f9f9",
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+              textAlign: "center",
+              "& .MuiOutlinedInput-notchedOutline": {
+                border: "none",
+              },
+            }}
+          >
+            <MenuItem value="" disabled>
+              Select Rows
+            </MenuItem>
+            {Array.from({ length: totalProviders }, (_, index) => (
+              <MenuItem key={index} value={index + 1}>
+                {index + 1} rows
+              </MenuItem>
+            ))}
+          </Select>
+        </Box>
+      </Box>
     </Box>
   );
 };

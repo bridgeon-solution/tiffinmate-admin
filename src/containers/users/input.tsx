@@ -4,6 +4,7 @@ import { BlockUnblockUser, PaginationUser } from "../../services/user";
 import { toast } from "react-toastify";
 import BasicModal from "../../atoms/modal";
 import Userdetails from "../../components/user/userdetails";
+import { SelectChangeEvent } from "@mui/material";
 
 interface User {
   id: string;
@@ -21,10 +22,21 @@ const UserContainer: React.FC = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [totalProviders, setTotalProviders] = useState<number>(1);
+  const [selectedValue, setSelectedValue] = useState<number>(5);
 
-  const FetchUser = async (page: number, search: string, filter: string) => {
+  const FetchUser = async (
+    page: number,
+    search: string,
+    filter: string,
+    selectedValue: number
+  ) => {
     try {
-      const response = await PaginationUser(page, search, filter);
+      const response = await PaginationUser(
+        page,
+        search,
+        filter,
+        selectedValue
+      );
       if (response && response.result) {
         setUserData(response.result.users);
         setTotalProviders(response.result.totalCount);
@@ -35,11 +47,14 @@ const UserContainer: React.FC = () => {
       setLoading(false);
     }
   };
+  const handleSelectChange = (event: SelectChangeEvent<number | string>) => {
+    setSelectedValue(Number(event.target.value));
+  };
 
   const handleBlockUnblock = async (id: string) => {
     try {
       await BlockUnblockUser(id);
-      FetchUser(currentPage, search, filter);
+      FetchUser(currentPage, search, filter, selectedValue);
     } catch (error) {
       toast.error("Something went wrong");
     }
@@ -47,7 +62,7 @@ const UserContainer: React.FC = () => {
 
   const handlePageChange = async (page: number) => {
     setCurrentPage(page);
-    FetchUser(page, search, filter);
+    FetchUser(page, search, filter, selectedValue);
   };
   const handleDetails = (id: string) => {
     setSelectedUserId(id);
@@ -59,8 +74,8 @@ const UserContainer: React.FC = () => {
   };
 
   useEffect(() => {
-    FetchUser(1, search, filter);
-  }, [filter, search]);
+    FetchUser(1, search, filter, selectedValue);
+  }, [filter, search, selectedValue]);
 
   return (
     <div>
@@ -73,6 +88,8 @@ const UserContainer: React.FC = () => {
           handlePageChange={handlePageChange}
           handleDetails={handleDetails}
           totalProviders={totalProviders}
+          handleSelectChange={handleSelectChange}
+          selectedValue={selectedValue}
         />
       ) : (
         <div>Loading...</div>
