@@ -6,7 +6,7 @@ import {
   VerificationApprove,
   VerificationRejected,
 } from "../../services/provider";
-import { SelectChangeEvent } from "@mui/material";
+import { Box, CircularProgress, SelectChangeEvent } from "@mui/material";
 
 interface Provider {
   id: string;
@@ -120,7 +120,17 @@ const ProviderContainer: React.FC = () => {
           selectedValue={selectedValue}
         />
       ) : (
-        <div>Loading...</div>
+        <div><Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+</div>
       )}
     </div>
   );

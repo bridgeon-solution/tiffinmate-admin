@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { PaginationProvider } from "../../services/provider";
 import Providertable from "../../components/provider/providertable";
 import { toast } from "react-toastify";
-import { SelectChangeEvent } from "@mui/material";
+import { Box, CircularProgress, SelectChangeEvent } from "@mui/material";
 import { BlockUnblockProvider } from "../../services/provider";
 
 interface Provider {
@@ -66,7 +66,7 @@ const VendorContainer: React.FC = () => {
   }, [filter, search, selectedValue]);
 
   return (
-    <div>
+    <>
       {providerData ? (
         <Providertable
           provider={providerData}
@@ -79,9 +79,19 @@ const VendorContainer: React.FC = () => {
           selectedValue={selectedValue}
         />
       ) : (
-        <div>Loading...</div>
+        <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+
       )}
-    </div>
+    </>
   );
 };
 
