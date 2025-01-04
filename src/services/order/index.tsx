@@ -1,10 +1,11 @@
 import axiosInstance from "../api";
 
-export const GetOrders = async (page:number,pagesize:number,search:string,filter:string) => {
+export const GetOrders = async (page:number,selectedValue:number,search:string,filter:string) => {
   try {
-    const response = await axiosInstance.post(
-      `/Order?page=${page}&pageSize=${pagesize}&search=${search}&filter=${filter}`
+    const response = await axiosInstance.get(
+      `/Order?page=${page}&pageSize=${selectedValue}&search=${search}&filter=${filter}`
     );
+    console.log(response)
     if (response && response.data && response.data.result) {
       return response.data;
     }

@@ -1,28 +1,74 @@
 import React from 'react'
-import { Box,Grid,Typography } from '@mui/material'
+import { Box,Grid,MenuItem,Typography } from '@mui/material'
 import { StyledTable } from '../../atoms/table'
 import { StyledSearchBar } from '../../atoms/search'
 import { StyledInputBase } from '../../atoms/search'
 import { StyledSearchButton } from '../../atoms/search'
 import FilterBox from "../../atoms/filtrer";
 import SearchIcon from "@mui/icons-material/Search";
+import { SelectChangeEvent } from '@mui/material'
+import { useState } from 'react'
+import PaginationRounded from '../../atoms/pagination'
+import {Select} from '@mui/material'
+
+
+interface Order {
+  
+  city: string;
+  user_name: string;
+  ph_no: string;
+  total_price: boolean;
+  start_date:string;
+}
+interface OrderTableProps {
+  order: Order[];
+  handlePageChange: (page: number) => void;
+  handleSelectChange: (event: SelectChangeEvent<number>) => void;
+  setSearch: (search: string) => void;
+  setFilter: (filter: string) => void;
+  totalOrders: number;
+  selectedValue: number;
+}
 
 
 
+const Dailyorder:React.FC<OrderTableProps> = ({
+  order,
+  handlePageChange,
+  setFilter,
+  setSearch,
+  totalOrders,
+  handleSelectChange,
+  selectedValue}) => {
 
+ const [status, setStatus] = useState<string>("");
+  const [_, setSearchQuery] = useState<string>("");
 
-const Dailyorder:React.FC = () => {
-    const handleSearchChange=(()=>{
+  const handleChange = (event: SelectChangeEvent<string>) => {
+    const newStatus = event.target.value;
+    setStatus(newStatus);
+    setFilter(newStatus);
+  };
 
-    })
-    const handleChange=(()=>{
+   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+       const newSearch = e.target.value;
+       setSearch(newSearch);
+       setSearchQuery(newSearch);
+     };
 
-    })
     const options = [
-        { value: "true", label: "Blocked" },
-        { value: "false", label: "Active" },
-        { value: "all", label: "All Providers" },
+        { value: "newest", label: "Newest" },
+        { value: "oldest", label: "Oldest" },
       ];
+
+      let totalPage = 0;
+  if (totalOrders % selectedValue == 0) {
+    totalPage = totalOrders / selectedValue;
+  } else {
+    totalPage = Math.ceil(totalOrders / selectedValue);
+  }
+ 
+
   return (
     <Box
       sx={{
@@ -107,7 +153,61 @@ const Dailyorder:React.FC = () => {
             <th>Status</th>
           </tr>
         </thead>
+        <tbody>
+          {order.length > 0 ? (
+            order.map((od) => (
+              <tr>
+                <td>{od.user_name}</td>
+                <td>{od.total_price}</td>
+                <td>{od.ph_no}</td>
+                <td>{od.city}</td>
+                <td><span style={{color:"red"}}>Proccesing</span></td>
+              </tr>
+            ))
+          ) : (
+            <Typography variant="body1" color="textSecondary">
+              No items found
+            </Typography>
+          )}
+        </tbody>
         </StyledTable>
+
+        <Box display="flex" gap={4} alignItems="center" mt={2}>
+        <PaginationRounded
+          totalPages={totalPage}
+          onPageChange={handlePageChange}
+        />
+        <Box display="flex" alignItems="center" gap={1}>
+          <Typography sx={{ fontWeight: "bold", fontSize: "14px" }}>
+            Show:
+          </Typography>
+          <Select
+            value={selectedValue}
+            onChange={handleSelectChange}
+            displayEmpty
+            sx={{
+              width: "150px",
+              height: "35px",
+              backgroundColor: "#f9f9f9",
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+              textAlign: "center",
+              "& .MuiOutlinedInput-notchedOutline": {
+                border: "none",
+              },
+            }}
+          >
+            <MenuItem value="" disabled>
+              Select Rows
+            </MenuItem>
+            {Array.from({ length: totalOrders }, (_, index) => (
+              <MenuItem key={index} value={index + 1}>
+                {index + 1} rows
+              </MenuItem>
+            ))}
+          </Select>
+        </Box>
+      </Box>
         </Box>
   )
 }
