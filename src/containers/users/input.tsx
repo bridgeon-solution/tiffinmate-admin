@@ -4,7 +4,7 @@ import { BlockUnblockUser, PaginationUser } from "../../services/user";
 import { toast } from "react-toastify";
 import BasicModal from "../../atoms/modal";
 import Userdetails from "../../components/user/userdetails";
-import { SelectChangeEvent } from "@mui/material";
+import { Box, CircularProgress, SelectChangeEvent } from "@mui/material";
 
 interface User {
   id: string;
@@ -78,7 +78,7 @@ const UserContainer: React.FC = () => {
   }, [filter, search, selectedValue]);
 
   return (
-    <div>
+    <>
       {userData ? (
         <Usertable
           user={userData}
@@ -92,14 +92,24 @@ const UserContainer: React.FC = () => {
           selectedValue={selectedValue}
         />
       ) : (
-        <div>Loading...</div>
+        <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+
       )}
       {openModal && selectedUserId && (
         <BasicModal open={openModal} handleClose={handleCloseModal}>
           <Userdetails userId={selectedUserId} handleClose={handleCloseModal} />
         </BasicModal>
       )}
-    </div>
+    </>
   );
 };
 
