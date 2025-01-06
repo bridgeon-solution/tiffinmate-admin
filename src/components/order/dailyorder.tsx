@@ -9,7 +9,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import { SelectChangeEvent } from '@mui/material'
 import { useState } from 'react'
 import PaginationRounded from '../../atoms/pagination'
-import {Select} from '@mui/material'
+import {Tooltip,IconButton,Select} from '@mui/material'
+import DownloadIcon from '@mui/icons-material/Download';
+
 
 
 interface Order {
@@ -24,6 +26,7 @@ interface OrderTableProps {
   order: Order[];
   handlePageChange: (page: number) => void;
   handleSelectChange: (event: SelectChangeEvent<number>) => void;
+  exportToExcel:()=>void;
   setSearch: (search: string) => void;
   setFilter: (filter: string) => void;
   totalOrders: number;
@@ -39,6 +42,7 @@ const Dailyorder:React.FC<OrderTableProps> = ({
   setSearch,
   totalOrders,
   handleSelectChange,
+  exportToExcel,
   selectedValue}) => {
 
  const [status, setStatus] = useState<string>("");
@@ -140,6 +144,11 @@ const Dailyorder:React.FC<OrderTableProps> = ({
                     options={options}
                     fullWidth={true}
                   ></FilterBox>
+                  <Tooltip title="Download">
+                  <IconButton color="primary" onClick={exportToExcel}>
+                    <DownloadIcon/>
+                  </IconButton>
+                </Tooltip>
                 </Grid>
               </Grid>
             </th>

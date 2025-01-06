@@ -4,6 +4,7 @@ import { useState,useEffect } from 'react';
 import { GetOrders } from '../../services/order';
 import { toast } from 'react-toastify';
 import { SelectChangeEvent,Box, CircularProgress } from '@mui/material';
+import * as XLSX from 'xlsx';
 
 interface Order {
   
@@ -53,6 +54,18 @@ const Dailyordercontainer:React.FC = () => {
             setCurrentPage(page);
             FetchOrder(page, search, filter, selectedValue);
           };
+          const exportToExcel = () => {
+            if (!orderData || orderData.length === 0) {
+              toast.error("No data available to export!");
+              return;
+            }
+            const workbook = XLSX.utils.book_new();
+            const worksheet = XLSX.utils.json_to_sheet(orderData);
+            // Add the worksheet to the workbook
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
+            // Export the workbook
+            XLSX.writeFile(workbook, "Users.xlsx");
+          };
         
           useEffect(() => {
             FetchOrder(1, search, filter, selectedValue);
@@ -70,6 +83,7 @@ const Dailyordercontainer:React.FC = () => {
           totalOrders={totalProviders}
           handleSelectChange={handleSelectChange}
           selectedValue={selectedValue}
+          exportToExcel={exportToExcel}
         />
       ) : (
         <Box
