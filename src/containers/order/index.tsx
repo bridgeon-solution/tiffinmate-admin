@@ -61,9 +61,7 @@ const Dailyordercontainer:React.FC = () => {
             }
             const workbook = XLSX.utils.book_new();
             const worksheet = XLSX.utils.json_to_sheet(orderData);
-            // Add the worksheet to the workbook
             XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
-            // Export the workbook
             XLSX.writeFile(workbook, "Users.xlsx");
           };
         

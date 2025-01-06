@@ -5,7 +5,7 @@ export const GetOrders = async (page:number,selectedValue:number,search:string,f
     const response = await axiosInstance.get(
       `/Order?page=${page}&pageSize=${selectedValue}&search=${search}&filter=${filter}`
     );
-    console.log(response)
+   
     if (response && response.data && response.data.result) {
       return response.data;
     }
