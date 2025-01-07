@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, MenuItem, Typography } from "@mui/material";
+import { Box, CircularProgress, Grid, MenuItem, Typography } from "@mui/material";
 import { StyledTable } from "../../atoms/table";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -35,6 +35,7 @@ interface VerificationtableProps {
   handleDownloadCertificate: (certificate: string, name: string) => void;
   totalProviders: number;
   selectedValue: number;
+  loading:boolean;
 }
 
 const Verificationtable: React.FC<VerificationtableProps> = ({
@@ -47,6 +48,7 @@ const Verificationtable: React.FC<VerificationtableProps> = ({
   totalProviders,
   handleSelectChange,
   selectedValue,
+  loading
 }) => {
   const [_, setSearchQuery] = useState<string>("");
 
@@ -155,7 +157,8 @@ const Verificationtable: React.FC<VerificationtableProps> = ({
                     }
                   />
                 </td>
-                <td>
+                <td>{loading?(<CircularProgress size={20}/>):(
+                  <>
                   <CheckCircleOutlineIcon
                     style={{ cursor: "pointer", color: "#008000" }}
                     onClick={() => ApproveVerification(vendor.id)}
@@ -163,7 +166,7 @@ const Verificationtable: React.FC<VerificationtableProps> = ({
                   <DangerousOutlinedIcon
                     style={{ cursor: "pointer", color: "#FF0000" }}
                     onClick={() => RejectVerification(vendor.id)}
-                  />
+                  /></>)}
                 </td>
               </tr>
             ))

@@ -5,25 +5,38 @@ import { GetOrders } from '../../services/order';
 import { toast } from 'react-toastify';
 import { SelectChangeEvent,Box, CircularProgress } from '@mui/material';
 import * as XLSX from 'xlsx';
+import BasicModal from '../../atoms/modal';
+import Orderdetails from '../../components/order/orderdetails';
 
 interface Order {
   
   city: string;
-  user_name: string;
-  ph_no: string;
+  user: string;
+  provider: string;
   total_price: boolean;
   start_date:string;
+  order_id:string
 }
 
 const Dailyordercontainer:React.FC = () => {
 
   const [orderData, setOrderData] = useState<Order[] | null>(null);
     const [_, setCurrentPage] = useState<number>(1);
+    const [modalOpen, setModalOpen] = useState(false);
     const [search, setSearch] = useState<string>("");
     const [filter, setFilter] = useState<string>("all");
     const [totalProviders, setTotalProviders] = useState<number>(1);
+    const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   
     const [selectedValue, setSelectedValue] = useState<number>(10);
+    const handleOpenModal = (orderId: string) => {
+      setSelectedOrderId(orderId);
+      setModalOpen(true);
+    };
+    const handleCloseModal = () => {
+      setModalOpen(false);
+      setSelectedOrderId(null);
+    };
 
      const FetchOrder = async (
         page: number,
@@ -40,7 +53,7 @@ const Dailyordercontainer:React.FC = () => {
             
           );
           if (response && response.result) {
-            setOrderData(response.result.allUsers);
+            setOrderData(response.result.allDetails);
             setTotalProviders(response.result.totalCount);
           }
         } catch (error) {
@@ -82,6 +95,7 @@ const Dailyordercontainer:React.FC = () => {
           handleSelectChange={handleSelectChange}
           selectedValue={selectedValue}
           exportToExcel={exportToExcel}
+          onOpenModal={handleOpenModal}
         />
       ) : (
         <Box
@@ -95,6 +109,11 @@ const Dailyordercontainer:React.FC = () => {
         <CircularProgress />
       </Box>
 
+      )}
+      {modalOpen && (
+        <BasicModal open={modalOpen} handleClose={handleCloseModal}>
+          <Orderdetails orderId={selectedOrderId} />
+        </BasicModal>
       )}
       
     </>

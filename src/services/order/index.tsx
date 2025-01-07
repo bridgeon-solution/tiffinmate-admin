@@ -14,3 +14,20 @@ export const GetOrders = async (page:number,selectedValue:number,search:string,f
     throw error;
   }
 };
+
+
+
+export const GetOrderDetails = async (id:string) => {
+  try {
+    const response = await axiosInstance.get(
+      `/Order/${id}`
+    );
+   
+    if (response && response.data && response.data.result) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    throw error;
+  }
+};
