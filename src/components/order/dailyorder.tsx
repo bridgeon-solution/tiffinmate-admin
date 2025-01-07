@@ -64,9 +64,7 @@ const Dailyorder:React.FC<OrderTableProps> = ({
        setSearch(newSearch);
        setSearchQuery(newSearch);
      };
-     const handleViewDetails=()=>{
-
-     }
+    
 
     const options = [
         { value: "newest", label: "Newest" },
