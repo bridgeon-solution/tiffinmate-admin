@@ -99,7 +99,7 @@ const menuItems = [
   { name: "Order List", path: "/orderlist" },
   { name: "Users", path: "/users" },
   { name: "Food Providers", path: "/food-providers" },
-  { name: "Subscriptions", path: "/subscriptions" },
+  { name: "subscription", path: "/subscription" },
   { name: "Vendor Verification", path: "/vendor-verification" },
 ];
 

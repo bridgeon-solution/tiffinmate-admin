@@ -22,7 +22,7 @@ interface Order {
   user: string;
   provider: string;
   total_price: boolean;
-  start_date:string;
+  date:string;
   order_id:string;
 }
 interface OrderTableProps {
@@ -164,6 +164,7 @@ const Dailyorder:React.FC<OrderTableProps> = ({
             <th>Customer Name</th>
             <th>Total Price</th>
             <th>Provider name</th>
+            <th>Date</th>
             <th>Status</th>
             <th>details</th>
           </tr>
@@ -175,6 +176,7 @@ const Dailyorder:React.FC<OrderTableProps> = ({
                 <td>{od.user}</td>
                 <td>{od.total_price}</td>
                 <td>{od.provider}</td>
+                <td>{new Date(od.date).toLocaleDateString()}</td>
                 <td><span style={{color:"red"}}>Proccesing</span></td>
                 <td><RemoveRedEyeOutlinedIcon sx={{cursor:"pointer"}} onClick={() => onOpenModal(od.order_id)}/></td>
                 
