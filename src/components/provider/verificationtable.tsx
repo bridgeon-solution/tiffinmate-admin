@@ -1,11 +1,12 @@
 import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, CircularProgress, Grid, MenuItem, Typography } from "@mui/material";
 import { StyledTable } from "../../atoms/table";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import DangerousOutlinedIcon from "@mui/icons-material/DangerousOutlined";
 import PaginationRounded from "../../atoms/pagination";
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
+import { Select, SelectChangeEvent } from "@mui/material";
 
 import {
   StyledInputBase,
@@ -29,8 +30,12 @@ interface VerificationtableProps {
   ApproveVerification: (id: string) => void;
   RejectVerification: (id: string) => void;
   handlePageChange: (page: number) => void;
+  handleSelectChange: (event: SelectChangeEvent<number>) => void;
   setSearch: (search: string) => void;
-  handleDownloadCertificate:(certificate:string,name:string)=>void;
+  handleDownloadCertificate: (certificate: string, name: string) => void;
+  totalProviders: number;
+  selectedValue: number;
+  loading:boolean;
 }
 
 const Verificationtable: React.FC<VerificationtableProps> = ({
@@ -39,15 +44,25 @@ const Verificationtable: React.FC<VerificationtableProps> = ({
   RejectVerification,
   handlePageChange,
   setSearch,
-  handleDownloadCertificate
+  handleDownloadCertificate,
+  totalProviders,
+  handleSelectChange,
+  selectedValue,
+  loading
 }) => {
   const [_, setSearchQuery] = useState<string>("");
-  
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSearch = e.target.value;
     setSearch(newSearch);
     setSearchQuery(newSearch);
   };
+  let totalPage = 5;
+  if (totalProviders % 3 == 0) {
+    totalPage = totalProviders / 3;
+  } else {
+    totalPage = Math.ceil(totalProviders / 3);
+  }
 
   const handleViewCertificate = (certificate: string) => {
     window.open(certificate, "_self");
@@ -57,9 +72,11 @@ const Verificationtable: React.FC<VerificationtableProps> = ({
     <Box
       sx={{
         backgroundColor: "white",
-        padding: 4,
+        padding: { xs: 2, sm: 4 },
+        marginTop: { xs: 4, sm: 6 },
+        boxShadow: 2,
         borderRadius: "20px",
-        marginTop: 6,
+        overflowX: "auto",
       }}
     >
       <StyledTable>
@@ -118,39 +135,84 @@ const Verificationtable: React.FC<VerificationtableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {provider.length>0?(
-          provider.map((vendor) => (
-            <tr>
-              <td>{vendor.user_name}</td>
-              <td>{vendor.id}</td>
-              <td>{vendor.email}</td>
-              <td>
-                <RemoveRedEyeOutlinedIcon
-                  style={{ cursor: "pointer" }}
-                  onClick={() => handleViewCertificate(vendor.certificate)}
-                />
-                <FileDownloadOutlinedIcon color="primary" sx={{cursor:"pointer"}} onClick={()=>handleDownloadCertificate(vendor.certificate,vendor.user_name)} />
-              </td>
-              <td>
-                <CheckCircleOutlineIcon
-                  style={{ cursor: "pointer", color: "#008000" }}
-                  onClick={() => ApproveVerification(vendor.id)}
-                />  
-                <DangerousOutlinedIcon
-                  style={{ cursor: "pointer", color: "#FF0000" }}
-                  onClick={() => RejectVerification(vendor.id)}
-                />
-              </td>
-            </tr>
-          ))):(
-             <Typography variant="body1" color="textSecondary">
-                          No items found
-                        </Typography>
+          {provider.length > 0 ? (
+            provider.map((vendor) => (
+              <tr>
+                <td>{vendor.user_name}</td>
+                <td>{vendor.id}</td>
+                <td>{vendor.email}</td>
+                <td>
+                  <RemoveRedEyeOutlinedIcon
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleViewCertificate(vendor.certificate)}
+                  />
+                  <FileDownloadOutlinedIcon
+                    color="primary"
+                    sx={{ cursor: "pointer" }}
+                    onClick={() =>
+                      handleDownloadCertificate(
+                        vendor.certificate,
+                        vendor.user_name
+                      )
+                    }
+                  />
+                </td>
+                <td>{loading?(<CircularProgress size={20}/>):(
+                  <>
+                  <CheckCircleOutlineIcon
+                    style={{ cursor: "pointer", color: "#008000" }}
+                    onClick={() => ApproveVerification(vendor.id)}
+                  />
+                  <DangerousOutlinedIcon
+                    style={{ cursor: "pointer", color: "#FF0000" }}
+                    onClick={() => RejectVerification(vendor.id)}
+                  /></>)}
+                </td>
+              </tr>
+            ))
+          ) : (
+            <Typography variant="body1" color="textSecondary">
+              No items found
+            </Typography>
           )}
         </tbody>
       </StyledTable>
-      <PaginationRounded totalPages={8} onPageChange={handlePageChange} />
-
+      <Box display="flex" gap={4} alignItems="center" mt={2}>
+        <PaginationRounded
+          totalPages={totalPage}
+          onPageChange={handlePageChange}
+        />
+        <Box display="flex" alignItems="center" gap={1}>
+          <Typography sx={{ fontWeight: "bold", fontSize: "14px" }}>
+            Show:
+          </Typography>
+          <Select
+            value={selectedValue}
+            onChange={handleSelectChange}
+            displayEmpty
+            sx={{
+              width: "150px",
+              height: "35px",
+              backgroundColor: "#f9f9f9",
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+              textAlign: "center",
+              "& .MuiOutlinedInput-notchedOutline": {
+                border: "none",
+              },
+            }}
+          >
+            <MenuItem value="" disabled>
+              Select Rows
+            </MenuItem>
+            {Array.from({ length: totalProviders }, (_, index) => (
+              <MenuItem key={index} value={index + 1}>
+                {index + 1} rows
+              </MenuItem>
+            ))}
+          </Select>
+        </Box>
+      </Box>
     </Box>
   );
 };

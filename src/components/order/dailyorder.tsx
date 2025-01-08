@@ -1,56 +1,56 @@
-import React from "react";
-import {
-  Box,
-  Grid,
-  Typography,
-  SelectChangeEvent,
-  MenuItem,
-} from "@mui/material";
-import { useState } from "react";
-import { StyledTable } from "../../atoms/table";
-import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
-import {
-  StyledSearchBar,
-  StyledInputBase,
-  StyledSearchButton,
-} from "../../atoms/search";
-import SearchIcon from "@mui/icons-material/Search";
+import React from 'react'
+import { Box,Grid,MenuItem,Typography } from '@mui/material'
+import { StyledTable } from '../../atoms/table'
+import { StyledSearchBar } from '../../atoms/search'
+import { StyledInputBase } from '../../atoms/search'
+import { StyledSearchButton } from '../../atoms/search'
 import FilterBox from "../../atoms/filtrer";
-import PaginationRounded from "../../atoms/pagination";
-import { useNavigate } from "react-router-dom";
-import { Select } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import { SelectChangeEvent } from '@mui/material'
+import { useState } from 'react'
+import PaginationRounded from '../../atoms/pagination'
+import {Tooltip,IconButton,Select} from '@mui/material'
+import DownloadIcon from '@mui/icons-material/Download';
+import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 
-interface Provider {
-  email: string;
-  user_name: string;
-  id: string;
-  verification_status: string;
-  is_blocked: boolean;
+
+
+
+interface Order {
+  
+  city: string;
+  user: string;
+  provider: string;
+  total_price: boolean;
+  start_date:string;
+  order_id:string;
 }
-
-interface ProviderTableProps {
-  provider: Provider[];
-  handleBlockUnblock: (id: string) => void;
+interface OrderTableProps {
+  order: Order[];
   handlePageChange: (page: number) => void;
   handleSelectChange: (event: SelectChangeEvent<number>) => void;
+  exportToExcel:()=>void;
   setSearch: (search: string) => void;
   setFilter: (filter: string) => void;
-  totalProviders: number;
+  totalOrders: number;
   selectedValue: number;
+  onOpenModal: (orderId: string) => void;
 }
 
-const Providertable: React.FC<ProviderTableProps> = ({
-  provider,
-  handleBlockUnblock,
+
+
+const Dailyorder:React.FC<OrderTableProps> = ({
+  order,
   handlePageChange,
   setFilter,
   setSearch,
-  totalProviders,
+  totalOrders,
   handleSelectChange,
-  selectedValue,
-}) => {
-  const navigate = useNavigate();
-  const [status, setStatus] = useState<string>("");
+  exportToExcel,
+  onOpenModal,
+  selectedValue}) => {
+
+ const [status, setStatus] = useState<string>("");
   const [_, setSearchQuery] = useState<string>("");
 
   const handleChange = (event: SelectChangeEvent<string>) => {
@@ -59,26 +59,25 @@ const Providertable: React.FC<ProviderTableProps> = ({
     setFilter(newStatus);
   };
 
-  const options = [
-    { value: "true", label: "Blocked" },
-    { value: "false", label: "Active" },
-    { value: "all", label: "All Providers" },
-  ];
+   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+       const newSearch = e.target.value;
+       setSearch(newSearch);
+       setSearchQuery(newSearch);
+     };
+    
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newSearch = e.target.value;
-    setSearch(newSearch);
-    setSearchQuery(newSearch);
-  };
-  let totalPage = 0;
-  if (totalProviders % selectedValue == 0) {
-    totalPage = totalProviders / selectedValue;
+    const options = [
+        { value: "newest", label: "Newest" },
+        { value: "oldest", label: "Oldest" },
+      ];
+
+      let totalPage = 0;
+  if (totalOrders % selectedValue == 0) {
+    totalPage = totalOrders / selectedValue;
   } else {
-    totalPage = Math.ceil(totalProviders / selectedValue);
+    totalPage = Math.ceil(totalOrders / selectedValue);
   }
-  const handleDetailsPage = (vendor: Provider) => {
-    navigate(`/food-providers/details/${vendor.id}`, { state: vendor });
-  };
+ 
 
   return (
     <Box
@@ -91,7 +90,7 @@ const Providertable: React.FC<ProviderTableProps> = ({
         overflowX: "auto",
       }}
     >
-      <StyledTable>
+        <StyledTable>
         <thead>
           <tr>
             <th colSpan={5}>
@@ -111,7 +110,7 @@ const Providertable: React.FC<ProviderTableProps> = ({
                       marginBottom: { xs: 2, sm: 0 },
                     }}
                   >
-                    Vendor Management
+                    Daily Orders
                   </Typography>
                 </Grid>
                 <Grid
@@ -145,59 +144,40 @@ const Providertable: React.FC<ProviderTableProps> = ({
                   </StyledSearchBar>
 
                   <FilterBox
-                    label="FilterBy"
+                    label="Short By"
                     value={status}
                     onChange={handleChange}
                     options={options}
                     fullWidth={true}
                   ></FilterBox>
+                  <Tooltip title="Download">
+                  <IconButton color="primary" onClick={exportToExcel}>
+                    <DownloadIcon/>
+                  </IconButton>
+                </Tooltip>
                 </Grid>
               </Grid>
             </th>
           </tr>
 
           <tr>
-            <th>Vendor Name</th>
-            <th>Vendor Id</th>
-            <th>Email</th>
+            <th>Customer Name</th>
+            <th>Total Price</th>
+            <th>Provider name</th>
             <th>Status</th>
-            <th>Rating</th>
-            <th>Details</th>
+            <th>details</th>
           </tr>
         </thead>
         <tbody>
-          {provider.length > 0 ? (
-            provider.map((vendor) => (
+          {order.length > 0 ? (
+            order.map((od) => (
               <tr>
-                <td>{vendor.user_name}</td>
-                <td>{vendor.id}</td>
-                <td>{vendor.email}</td>
-                <td>
-                  <button
-                    onClick={() => handleBlockUnblock(vendor.id)}
-                    style={{
-                      color: vendor.is_blocked ? "red" : "green",
-                      backgroundColor: "white",
-                      border: "none",
-                      padding: "5px 10px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    {" "}
-                    {vendor.is_blocked ? (
-                      <Typography fontWeight="bold">Blocked</Typography>
-                    ) : (
-                      <Typography fontWeight="bold">Active</Typography>
-                    )}
-                  </button>
-                </td>
-                <td>5.5</td>
-                <td>
-                  <RemoveRedEyeOutlinedIcon
-                    onClick={() => handleDetailsPage(vendor)}
-                    sx={{ cursor: "pointer" }}
-                  />
-                </td>
+                <td>{od.user}</td>
+                <td>{od.total_price}</td>
+                <td>{od.provider}</td>
+                <td><span style={{color:"red"}}>Proccesing</span></td>
+                <td><RemoveRedEyeOutlinedIcon sx={{cursor:"pointer"}} onClick={() => onOpenModal(od.order_id)}/></td>
+                
               </tr>
             ))
           ) : (
@@ -206,9 +186,9 @@ const Providertable: React.FC<ProviderTableProps> = ({
             </Typography>
           )}
         </tbody>
-      </StyledTable>
+        </StyledTable>
 
-      <Box display="flex" gap={4} alignItems="center" mt={2}>
+        <Box display="flex" gap={4} alignItems="center" mt={2}>
         <PaginationRounded
           totalPages={totalPage}
           onPageChange={handlePageChange}
@@ -236,7 +216,7 @@ const Providertable: React.FC<ProviderTableProps> = ({
             <MenuItem value="" disabled>
               Select Rows
             </MenuItem>
-            {Array.from({ length: totalProviders }, (_, index) => (
+            {Array.from({ length: totalOrders }, (_, index) => (
               <MenuItem key={index} value={index + 1}>
                 {index + 1} rows
               </MenuItem>
@@ -244,8 +224,8 @@ const Providertable: React.FC<ProviderTableProps> = ({
           </Select>
         </Box>
       </Box>
-    </Box>
-  );
-};
+        </Box>
+  )
+}
 
-export default Providertable;
+export default Dailyorder

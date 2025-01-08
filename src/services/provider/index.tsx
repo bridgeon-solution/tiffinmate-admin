@@ -1,7 +1,5 @@
 import axiosInstance from "../api";
 
-
-
 export const VerificationApprove = async (id: string) => {
   try {
     const response = await axiosInstance.post(
@@ -62,11 +60,13 @@ export const SearchedProvider = async () => {
 export const PaginationProvider = async (
   page: number,
   search: string,
-  filter: string
+  filter: string,
+  selectedValue: number
 ) => {
   try {
+
     const response = await axiosInstance.get(
-      `/Provider?pageSize=${3}&page=${page}&search=${search}&filter=${filter}&verifystatus=approved`
+      `/Provider?pageSize=${selectedValue}&page=${page}&search=${search}&filter=${filter}&verifystatus=approved`
     );
 
     if (response && response.data && response.data.result) {
@@ -78,14 +78,67 @@ export const PaginationProvider = async (
   }
 };
 
-export const PaginationVerification = async (page: number, search: string) => {
+export const PaginationVerification = async (
+  page: number,
+  search: string,
+  selectedValue: number
+) => {
   try {
     const response = await axiosInstance.get(
-      `/Provider?pageSize=${3}&page=${page}&search=${search}&verifystatus=pending`
+      `/Provider?pageSize=${selectedValue}&page=${page}&search=${search}&verifystatus=pending`
     );
 
     if (response && response.data && response.data.result) {
       return response.data;
+    }
+    return null;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const ProviderDetails = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(`/Provider/${id}/details`);
+
+    if (response && response.data && response.data.result) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const ProviderReviews = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(`/Provider/${id}/reviews`);
+    if (response && response.data && response.data.result) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const ProviderMenus = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(`/FoodItem/providerid/${id}`);
+    if (response && response.data && response.data.result) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const TotalProvider = async () => {
+  try {
+    const response = await axiosInstance.get("/Provider");
+    if (response && response.data && response.data.result) {
+      return response.data.result.totalCount;
     }
     return null;
   } catch (error) {

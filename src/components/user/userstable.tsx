@@ -10,6 +10,7 @@ import {
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import PaginationRounded from "../../atoms/pagination";
+import { Select, MenuItem } from "@mui/material";
 
 interface User {
   email: string;
@@ -25,6 +26,9 @@ interface UserTableProps {
   setSearch: (search: string) => void;
   setFilter: (filter: string) => void;
   handleDetails: (id: string) => void;
+  totalProviders: number;
+  selectedValue: number;
+  handleSelectChange: (event: SelectChangeEvent<number>) => void;
 }
 
 const Usertable: React.FC<UserTableProps> = ({
@@ -34,6 +38,9 @@ const Usertable: React.FC<UserTableProps> = ({
   setSearch,
   setFilter,
   handleDetails,
+  totalProviders,
+  selectedValue,
+  handleSelectChange,
 }) => {
   const [status, setStatus] = useState<string>("");
   const [_, setSearchQuery] = useState<string>("");
@@ -50,6 +57,13 @@ const Usertable: React.FC<UserTableProps> = ({
     setSearch(newSearchQuery);
   };
 
+  let totalPage;
+  if (totalProviders % selectedValue == 0) {
+    totalPage = totalProviders / selectedValue;
+  } else {
+    totalPage = Math.ceil(totalProviders / selectedValue);
+  }
+
   const options = [
     { value: "true", label: "Blocked" },
     { value: "false", label: "Active" },
@@ -60,9 +74,11 @@ const Usertable: React.FC<UserTableProps> = ({
     <Box
       sx={{
         backgroundColor: "white",
-        padding: 4,
+        padding: { xs: 2, sm: 4 },
+        marginTop: { xs: 4, sm: 6 },
+        boxShadow: 2,
         borderRadius: "20px",
-        marginTop: 6,
+        overflowX: "auto",
       }}
     >
       <StyledTable>
@@ -174,7 +190,7 @@ const Usertable: React.FC<UserTableProps> = ({
                 <td>
                   <RemoveRedEyeOutlinedIcon
                     sx={{ cursor: "pointer" }}
-                    onClick={() => handleDetails(vendor.id)} 
+                    onClick={() => handleDetails(vendor.id)}
                   />
                 </td>
               </tr>
@@ -186,7 +202,42 @@ const Usertable: React.FC<UserTableProps> = ({
           )}
         </tbody>
       </StyledTable>
-      <PaginationRounded totalPages={8} onPageChange={handlePageChange} />
+      <Box display="flex" gap={4} alignItems="center" mt={2}>
+        <PaginationRounded
+          totalPages={totalPage}
+          onPageChange={handlePageChange}
+        />
+        <Box display="flex" alignItems="center" gap={1}>
+          <Typography sx={{ fontWeight: "bold", fontSize: "14px" }}>
+            Show:
+          </Typography>
+          <Select
+            value={selectedValue}
+            onChange={handleSelectChange}
+            displayEmpty
+            sx={{
+              width: "150px",
+              height: "35px",
+              backgroundColor: "#f9f9f9",
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+              textAlign: "center",
+              "& .MuiOutlinedInput-notchedOutline": {
+                border: "none",
+              },
+            }}
+          >
+            <MenuItem value="" disabled>
+              Select Rows
+            </MenuItem>
+            {Array.from({ length: totalProviders }, (_, index) => (
+              <MenuItem key={index} value={index + 1}>
+                {index + 1} rows
+              </MenuItem>
+            ))}
+          </Select>
+        </Box>
+      </Box>
     </Box>
   );
 };
