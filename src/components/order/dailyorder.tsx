@@ -11,16 +11,19 @@ import { useState } from 'react'
 import PaginationRounded from '../../atoms/pagination'
 import {Tooltip,IconButton,Select} from '@mui/material'
 import DownloadIcon from '@mui/icons-material/Download';
+import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+
 
 
 
 interface Order {
   
   city: string;
-  user_name: string;
-  ph_no: string;
+  user: string;
+  provider: string;
   total_price: boolean;
   start_date:string;
+  order_id:string;
 }
 interface OrderTableProps {
   order: Order[];
@@ -31,6 +34,7 @@ interface OrderTableProps {
   setFilter: (filter: string) => void;
   totalOrders: number;
   selectedValue: number;
+  onOpenModal: (orderId: string) => void;
 }
 
 
@@ -43,6 +47,7 @@ const Dailyorder:React.FC<OrderTableProps> = ({
   totalOrders,
   handleSelectChange,
   exportToExcel,
+  onOpenModal,
   selectedValue}) => {
 
  const [status, setStatus] = useState<string>("");
@@ -59,6 +64,7 @@ const Dailyorder:React.FC<OrderTableProps> = ({
        setSearch(newSearch);
        setSearchQuery(newSearch);
      };
+    
 
     const options = [
         { value: "newest", label: "Newest" },
@@ -157,20 +163,21 @@ const Dailyorder:React.FC<OrderTableProps> = ({
           <tr>
             <th>Customer Name</th>
             <th>Total Price</th>
-            <th>Phone no</th>
-            <th>Place</th>
+            <th>Provider name</th>
             <th>Status</th>
+            <th>details</th>
           </tr>
         </thead>
         <tbody>
           {order.length > 0 ? (
             order.map((od) => (
               <tr>
-                <td>{od.user_name}</td>
+                <td>{od.user}</td>
                 <td>{od.total_price}</td>
-                <td>{od.ph_no}</td>
-                <td>{od.city}</td>
+                <td>{od.provider}</td>
                 <td><span style={{color:"red"}}>Proccesing</span></td>
+                <td><RemoveRedEyeOutlinedIcon sx={{cursor:"pointer"}} onClick={() => onOpenModal(od.order_id)}/></td>
+                
               </tr>
             ))
           ) : (

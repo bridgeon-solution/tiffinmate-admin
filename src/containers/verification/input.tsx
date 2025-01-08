@@ -19,7 +19,7 @@ interface Provider {
 const ProviderContainer: React.FC = () => {
   const [providerData, setProviderData] = useState<Provider[] | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
   const [totalProviders, setTotalProviders] = useState<number>(1);
   const [selectedValue, setSelectedValue] = useState<number>(5);
@@ -30,6 +30,7 @@ const ProviderContainer: React.FC = () => {
     selectedValue: number
   ) => {
     try {
+      setLoading(true)
       const response = await PaginationVerification(
         page,
         search,
@@ -48,6 +49,7 @@ const ProviderContainer: React.FC = () => {
 
   const ApproveVerification = async (id: string) => {
     try {
+      setLoading(true)
       const response = await VerificationApprove(id);
       FetchUser(currentPage, search, selectedValue);
       if (response.status == "success") {
@@ -57,11 +59,14 @@ const ProviderContainer: React.FC = () => {
       }
     } catch (error) {
       toast.error("something went wrong");
+    }finally{
+      setLoading(false)
     }
   };
 
   const RejectVerification = async (id: string) => {
     try {
+      setLoading(true);
       const response = await VerificationRejected(id);
       FetchUser(currentPage, search, selectedValue);
       if (response.status == "success") {
@@ -69,6 +74,8 @@ const ProviderContainer: React.FC = () => {
       }
     } catch (error) {
       toast.error("something went wrong");
+    }finally{
+      setLoading(false)
     }
   };
   const handleSelectChange = (event: SelectChangeEvent<number | string>) => {
@@ -118,6 +125,7 @@ const ProviderContainer: React.FC = () => {
           totalProviders={totalProviders}
           handleSelectChange={handleSelectChange}
           selectedValue={selectedValue}
+          loading={loading}
         />
       ) : (
         <div><Box
