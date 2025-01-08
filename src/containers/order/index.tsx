@@ -14,13 +14,13 @@ interface Order {
   user: string;
   provider: string;
   total_price: boolean;
-  start_date:string;
+  date:string;
   order_id:string
 }
 
 const Dailyordercontainer:React.FC = () => {
 
-  const [orderData, setOrderData] = useState<Order[] | null>(null);
+    const [orderData, setOrderData] = useState<Order[] | null>(null);
     const [_, setCurrentPage] = useState<number>(1);
     const [modalOpen, setModalOpen] = useState(false);
     const [search, setSearch] = useState<string>("");
