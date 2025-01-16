@@ -123,6 +123,10 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
     setLogoutModalOpen(false);
     
   };
+  const role=localStorage.getItem('name');
+  if (role!='admin') {
+    return <div className="flex items-center justify-center h-screen">Unauthorized</div>;
+  }
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />

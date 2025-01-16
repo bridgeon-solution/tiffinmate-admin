@@ -31,6 +31,12 @@ const LoginContainer: React.FC = () => {
           toast.success("Admin login succesfully");
           localStorage.setItem("id",response.data.result.id)
           localStorage.setItem("token",response.data.result.token)
+          localStorage.setItem("name",response.data.result.name)
+          localStorage.setItem("refresh_token",response.data.result.refresh_token)
+          console.log(response.data.result
+          )
+
+
         } else {
           toast.warning(response.data.error_message);
         }
