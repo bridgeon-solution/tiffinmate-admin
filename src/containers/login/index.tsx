@@ -33,9 +33,7 @@ const LoginContainer: React.FC = () => {
           localStorage.setItem("token",response.data.result.token)
           localStorage.setItem("name",response.data.result.name)
           localStorage.setItem("refresh_token",response.data.result.refresh_token)
-          console.log(response.data.result
-          )
-
+         
 
         } else {
           toast.warning(response.data.error_message);
