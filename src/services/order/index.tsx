@@ -2,10 +2,7 @@ import api from "../api";
 
 export const GetOrders = async (page:number,selectedValue:number,search:string,filter:string) => {
   try {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      throw new Error("Token not found. Please log in again.");
-    }
+    
     const response = await api.get(
       `/Order?page=${page}&pageSize=${selectedValue}&search=${search}&filter=${filter}`
     );
@@ -23,10 +20,7 @@ export const GetOrders = async (page:number,selectedValue:number,search:string,f
 
 export const GetOrderDetails = async (id:string) => {
   try {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      throw new Error("Token not found. Please log in again.");
-    }
+   
     const response = await api.get(
       `/Order/${id}`
     );
