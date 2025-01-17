@@ -17,7 +17,6 @@ const AdminNotificationContainer  = () => {
     const loadNotification=async()=>{
         try{
        const data=await GetAdminNotification();
-       console.log("notifications"+data);
        setNotifications(data)
 
         }
@@ -43,12 +42,11 @@ const AdminNotificationContainer  = () => {
           connection
             .start()
             .then(() => {
-              console.log('SignalR connected.');
+              
     
              
-              connection.on('ReceiveMessage', (title: string, message: string,isRead:boolean) => {
-                console.log('Notification received:', title, message);
-    
+              connection.on('ReceiveMessage', (title: string, message: string) => {
+                
                 
                 setNotifications((prevNotifications: Notification[]) => [
                     ...prevNotifications,
@@ -59,8 +57,9 @@ const AdminNotificationContainer  = () => {
                 toast.info(`${message}`);
               });
             })
-            .catch((err : Error) =>
-              console.error('Error while starting SignalR connection:', err)
+            .catch((err : Error) =>{
+                throw new Error(err.message);
+            }
             );
         }
     

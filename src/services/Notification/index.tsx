@@ -1,8 +1,9 @@
-import axiosInstance from "../api"
+import api from "../api";
+
 
 export const GetAdminNotification=async ()=>{
     try{
-        const responce=await axiosInstance.get(`/Notification/notification?recipienttype=Admin`)
+        const responce=await api.get(`/Notification/notification?recipienttype=Admin`)
         if(responce && responce.data && responce.data.result){
             return responce.data.result
         }
