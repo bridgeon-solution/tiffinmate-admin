@@ -7,7 +7,6 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
-import MarkChatUnreadOutlinedIcon from "@mui/icons-material/MarkChatUnreadOutlined";
 import SpaceDashboardOutlinedIcon from "@mui/icons-material/SpaceDashboardOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ListItem from "@mui/material/ListItem";
@@ -21,6 +20,7 @@ import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import DrawerHeader from "../drawer";
 import ConfirmModal from "../confirmboxmodal";
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
 
 const drawerWidth = 240;
@@ -49,6 +49,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
+
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -109,12 +110,17 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const handleLogoutOpen = () => setLogoutModalOpen(true);
   const handleLogoutClose = () => setLogoutModalOpen(false);
-  const navigate = useNavigate();
+  
 
+  const navigate=useNavigate();
 
   const handleMenuItemClick = (index: number) => {
     setActiveIndex(index);
     navigate(menuItems[index].path);
+  };
+
+  const handleNotificationClick = () => {
+    navigate("/notification");
   };
 
   const handleLogoutConfirm = () => {
@@ -210,8 +216,8 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
           position: "relative",
         }}
       >
-        <Box sx={{ position: "absolute", top: 20, right: 80 }}>
-          <MarkChatUnreadOutlinedIcon sx={{ fontSize: 25 }} />
+        <Box sx={{ position: "absolute", top: 20, right: 80} } >
+        <NotificationsActiveIcon sx={{ fontSize: 25 }} onClick={handleNotificationClick} />
           <Box
             sx={{
               position: "absolute",
