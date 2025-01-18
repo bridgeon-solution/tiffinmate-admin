@@ -71,7 +71,7 @@ const AdminNotificationContainer  = () => {
     
         return () => {
             if (connection) {
-              connection.stop().catch(err => console.error('Error stopping connection:', err));
+              connection.stop().catch((err:Error) => {throw new Error(err.message)});
             }
           };
       }, [connection]);

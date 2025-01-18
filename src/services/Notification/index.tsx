@@ -16,7 +16,7 @@ export const GetAdminNotification=async ()=>{
 
 export const clearallnotification=async ()=>{
     try{
-        const responce=await api.put(`/Notification/clear`)
+        const responce=await api.put(`/Notification`)
         if(responce && responce.data && responce.data.result){
             return responce.data.result
         }
