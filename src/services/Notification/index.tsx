@@ -13,3 +13,16 @@ export const GetAdminNotification=async ()=>{
         throw error;
     }
 }
+
+export const clearallnotification=async ()=>{
+    try{
+        const responce=await api.put(`/Notification/clear`)
+        if(responce && responce.data && responce.data.result){
+            return responce.data.result
+        }
+        return null;
+    }
+    catch(error){
+        throw error;
+    }
+}

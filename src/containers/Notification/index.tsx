@@ -1,6 +1,6 @@
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { useEffect, useState } from 'react'
-import { GetAdminNotification } from '../../services/Notification';
+import { clearallnotification, GetAdminNotification } from '../../services/Notification';
 import { toast } from 'react-toastify';
 import AdminNotifications from '../../components/notification';
 
@@ -13,22 +13,35 @@ interface Notification {
 const AdminNotificationContainer  = () => {
     const [connection,setConnection]=useState<HubConnection | null>(null)
     const [Notification,setNotifications]=useState<Notification[]>([])
+    const HUBURL= import.meta.env.VITE_HUB_URL
 
     const loadNotification=async()=>{
         try{
        const data=await GetAdminNotification();
        setNotifications(data)
-
         }
         catch(err){
             throw err;
         }
     }
 
+    
+    
+    const handleClearAll = async()=>{
+      try{
+        await clearallnotification();
+        setNotifications([]);
+      }
+      catch(err){
+        throw err;
+      }
+      
+    }
     useEffect(()=>{
         loadNotification();
+
         const newConnection = new HubConnectionBuilder()
-      .withUrl('https://localhost:7009/adminHub', {
+      .withUrl(HUBURL, {
         withCredentials: true,
       })
       .withAutomaticReconnect()
@@ -42,18 +55,11 @@ const AdminNotificationContainer  = () => {
           connection
             .start()
             .then(() => {
-              
-    
-             
-              connection.on('ReceiveMessage', (title: string, message: string) => {
-                
-                
+              connection.on('ReceiveMessage', (title: string, message: string) => {  
                 setNotifications((prevNotifications: Notification[]) => [
                     ...prevNotifications,
                     { title, message,isRead:false },
                   ]);;
-    
-               
                 toast.info(`${message}`);
               });
             })
@@ -71,7 +77,7 @@ const AdminNotificationContainer  = () => {
       }, [connection]);
 
   return (
-    <AdminNotifications notifications={Notification}/>
+    <AdminNotifications notifications={Notification}  onClear={handleClearAll}/>
   )
 }
 
