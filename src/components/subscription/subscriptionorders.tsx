@@ -11,7 +11,11 @@ import { useState } from "react";
 import PaginationRounded from "../../atoms/pagination";
 import { Tooltip, IconButton, Select } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
+// import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 
+interface SubscriptionDetail {
+  category_id: string;
+}
 interface Subscription {
   user: string;
   provider: string;
@@ -20,7 +24,11 @@ interface Subscription {
   order_id: string;
   cancelled_at: string;
   payment_status: boolean;
+  menu_id:string;
+  details: SubscriptionDetail[];
+
 }
+
 interface SubscriptionTableProps {
   order: Subscription[];
   handlePageChange: (page: number) => void;
@@ -30,6 +38,7 @@ interface SubscriptionTableProps {
   setFilter: (filter: string) => void;
   totalOrders: number;
   selectedValue: number;
+  onOpenModal: (orderId: string,category_id:string) => void;
 }
 
 const Subscriptionorders: React.FC<SubscriptionTableProps> = ({
@@ -41,6 +50,7 @@ const Subscriptionorders: React.FC<SubscriptionTableProps> = ({
   handleSelectChange,
   exportToExcel,
   selectedValue,
+  // onOpenModal
 }) => {
   const [status, setStatus] = useState<string>("");
   const [_, setSearchQuery] = useState<string>("");
@@ -181,8 +191,16 @@ const Subscriptionorders: React.FC<SubscriptionTableProps> = ({
                     )}
                   </td>
                   {/* <td>
-                    <RemoveRedEyeOutlinedIcon sx={{ cursor: "pointer" }} />
-                  </td> */}
+  {od.details && od.details.length > 0 && (
+    <IconButton
+      onClick={() =>
+        onOpenModal(od.menu_id, od.details[0].category_id)
+      }
+    >
+      <RemoveRedEyeOutlinedIcon sx={{ cursor: "pointer" }} />
+    </IconButton>
+  )}
+</td> */}
                 </tr>
               ))
             ) : (

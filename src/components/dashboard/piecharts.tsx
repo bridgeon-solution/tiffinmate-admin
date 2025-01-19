@@ -1,21 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { PieChart } from "@mui/x-charts/PieChart";
+import { GetAllOrders, GetTotalRevenue, GetTotalRevenueSubscription } from "../../services/order";
 
-const ordersData = [
-  { id: "Completed Orders", value: 70, label: "Completed", color: "#ffa726" },
-  { id: "Pending Orders", value: 30, label: "Pending", color: "#ff7043" },
-];
 
-const revenueData = [
-  { id: "Revenue Generated", value: 80, label: "Generated", color: "green" },
-  { id: "Revenue Pending", value: 20, label: "Pending", color: "#ff7043" },
-];
+
+
 
 const PieCard: React.FC = () => {
+
+ const [totalOrder,setTotalOrder]=useState(0);
+  const [totalRevenue,setTotalRevenue]=useState(0);
+  const [totalSubscriptionRevenue,setTotalSubscriptionRevenue]=useState(0);
+
+  const FetchSubscriptionRevenue=async()=>{
+    const total=await GetTotalRevenueSubscription();
+      setTotalSubscriptionRevenue(total);
+  
+  }
+
+  const FetchOrdersAndRevenue = async () => {
+    const totalOrder = await GetAllOrders();
+    setTotalOrder(totalOrder);
+  
+    const Revenue = await GetTotalRevenue(totalOrder);
+    setTotalRevenue(Revenue);
+  };
+  useEffect(() => {
+   
+    FetchOrdersAndRevenue(); 
+    FetchSubscriptionRevenue()
+  }, []);
+
+  const revenue=totalSubscriptionRevenue+totalRevenue;
+  const balancedRevenue=100-totalRevenue;
+  const balancedOrder=100-totalOrder;
+
+  const ordersData = [
+    { id: "Completed Orders", value: totalOrder, label: "Completed", color: "#ffa726" },
+    { id: "Pending Orders", value: balancedOrder, label: "Pending", color: "#ff7043" },
+  ];
+  const revenueData = [
+    { id: "Revenue Generated", value: revenue, label: "Generated", color: "green" },
+    { id: "Revenue Pending", value: balancedRevenue, label: "Pending", color: "#ff7043" },
+  ];
+
   return (
     <Box
       sx={{
