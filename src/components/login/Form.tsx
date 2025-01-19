@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { CustomeButton } from "../../atoms/button";
 import Input from "../../atoms/Input";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 interface LoginFormData {
   formData: {
@@ -24,6 +26,10 @@ const LoginFormComponent: React.FC<LoginFormData> = ({
   errors,
   loading,
 }) => {
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
   return (
     <Box>
       <Typography variant="h5">Admin Login</Typography>
@@ -46,14 +52,36 @@ const LoginFormComponent: React.FC<LoginFormData> = ({
         <Typography variant="body2" color="error">
           {errors.email}
         </Typography>
+        <Box sx={{ position: "relative" }}>
         <Input
           label="Password"
           name="password"
           value={formData.password}
           onChange={handleChange}
-          type="password"
+          type={passwordVisible ? "text" : "password"}
           fullWidth
-        ></Input>
+        >
+          
+        </Input>
+        <Box
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    right: "10px",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer",
+                  }}
+                  onClick={togglePasswordVisibility}
+                >
+                  {passwordVisible ? (
+                    <VisibilityOutlinedIcon />
+                  ) : (
+                    <VisibilityOffOutlinedIcon />
+                  )}
+                </Box>
+                </Box>
+
+       
         <Typography variant="body2" color="error">
           {errors.password}
         </Typography>

@@ -5,7 +5,12 @@ import { toast } from "react-toastify";
 import * as XLSX from "xlsx";
 import { GetSubscrition } from "../../services/order";
 import Subscriptionorders from "../../components/subscription/subscriptionorders";
+import BasicModal from "../../atoms/modal";
+import Subscriptiondetails from "../../components/subscription/subscriptiondetails";
 
+interface SubscriptionDetail {
+  category_id: string;
+}
 interface Subscription {
   city: string;
   user: string;
@@ -15,6 +20,9 @@ interface Subscription {
   order_id: string;
   cancelled_at:string;
   payment_status:boolean;
+  menu_id:string;
+  details: SubscriptionDetail[];
+
 }
 
 const SubscriptionContainer: React.FC = () => {
@@ -24,6 +32,12 @@ const SubscriptionContainer: React.FC = () => {
   const [filter, setFilter] = useState<string>("all");
   const [totalProviders, setTotalProviders] = useState<number>(1);
   const [selectedValue, setSelectedValue] = useState<number>(10);
+      const [modalOpen, setModalOpen] = useState(false);
+          const [selectedMenuId, setSelectedMenuId] = useState<string | null>(null);
+          const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+
+      
+  
 
   const FetchOrder = async (
     page: number,
@@ -43,6 +57,16 @@ const SubscriptionContainer: React.FC = () => {
   };
   const handleSelectChange = (event: SelectChangeEvent<number | string>) => {
     setSelectedValue(Number(event.target.value));
+  };
+  const handleOpenModal = (menuId: string,category_id:string) => {
+    setSelectedMenuId(menuId);
+    setSelectedCategoryId(category_id)
+    setModalOpen(true);
+  };
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedMenuId(null);
+    setSelectedCategoryId(null);
   };
   const handlePageChange = async (page: number) => {
     setCurrentPage(page);
@@ -74,6 +98,7 @@ const SubscriptionContainer: React.FC = () => {
           handleSelectChange={handleSelectChange}
           selectedValue={selectedValue}
           exportToExcel={exportToExcel}
+          onOpenModal={handleOpenModal}
           
         />
       ) : (
@@ -88,6 +113,11 @@ const SubscriptionContainer: React.FC = () => {
         <CircularProgress />
       </Box>
 
+      )}
+      {modalOpen && (
+        <BasicModal open={modalOpen} handleClose={handleCloseModal}>
+          <Subscriptiondetails menuId={selectedMenuId} categoryId={selectedCategoryId} />
+        </BasicModal>
       )}
   
   

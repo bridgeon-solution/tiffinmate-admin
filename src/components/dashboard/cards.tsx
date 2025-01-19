@@ -8,28 +8,52 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import StoreIcon from "@mui/icons-material/Store";
 import { TotalProvider } from "../../services/provider";
 import { TotalUsers } from "../../services/user";
+import { GetAllOrders, GetTotalRevenue, GetTotalRevenueSubscription } from "../../services/order";
 
 
 const Cards: React.FC = () => {
   const [totalProvider,setTotalProvider]=useState(0);
+  const [totalOrder,setTotalOrder]=useState(0);
+  const [totalUsers,setTotalUsers]=useState(0);
+  const [totalRevenue,setTotalRevenue]=useState(0);
+  const [totalSubscriptionRevenue,setTotalSubscriptionRevenue]=useState(0);
+
+
+
+
 const FetchProviders=async()=>{
   const totalProviders=await TotalProvider();
     setTotalProvider(totalProviders);
 
 }
 
-  const [totalUsers,setTotalUsers]=useState(0);
+const FetchSubscriptionRevenue=async()=>{
+  const total=await GetTotalRevenueSubscription();
+    setTotalSubscriptionRevenue(total);
+
+}
+
 const FetchUsers=async()=>{
   const totalUsers=await TotalUsers();
     setTotalUsers(totalUsers);
 
 }
 
+const FetchOrdersAndRevenue = async () => {
+  const totalOrder = await GetAllOrders();
+  setTotalOrder(totalOrder);
 
-useEffect(()=>{
-  FetchProviders()
-  FetchUsers()
-},[])
+  const Revenue = await GetTotalRevenue(totalOrder);
+  setTotalRevenue(Revenue);
+};
+
+useEffect(() => {
+  FetchProviders();
+  FetchUsers();
+  FetchOrdersAndRevenue(); 
+  FetchSubscriptionRevenue()
+}, []);
+const revenue=totalSubscriptionRevenue+totalRevenue;
   
   return (
     <Grid
@@ -46,7 +70,7 @@ useEffect(()=>{
               style={{ color: "#4caf50", fontSize: "30px" }}
             />
           }
-          number={75}
+          number={totalOrder}
           text="Total Orders"
         />
       </Grid>
@@ -62,7 +86,7 @@ useEffect(()=>{
       <Grid item xs={12} sm={6} md={4}>
         <Card
           icon={<PieChartIcon style={{ color: "#f50057", fontSize: "30px" }} />}
-          number={40}
+          number={revenue}
           text="Total Revenue"
         />
       </Grid>
