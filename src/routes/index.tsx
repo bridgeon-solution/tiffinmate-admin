@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Providerdetailspage from '../components/provider/providerdetailspage';
 import { CircularProgress, Box } from "@mui/material";
 import SubscriptionPage from '../pages/subscriptionPage';
+import Notificationpage from '../pages/notificationpage';
 
 
 const NavBar = lazy(() => import('../atoms/navbar'));
@@ -44,7 +45,7 @@ const AppRouter: React.FC = () => {
                   <Route path="subscription" element={<SubscriptionPage />} />
                   <Route path="vendor-verification" element={<VendorVerificationPage />} />
                   <Route path="/food-providers/details/:id" element={<Providerdetailspage/>}/>
-
+                  <Route path="/notification" element={<Notificationpage />} />
                 </Routes>
               </NavBar>
             }
