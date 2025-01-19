@@ -1,8 +1,12 @@
-import axiosInstance from "../api";
+import api from "../api";
 
 export const BlockUnblockUser = async (id: string) => {
   try {
-    const response = await axiosInstance.patch(`/User/block?id=${id}`);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("Token not found. Please log in again.");
+    }
+    const response = await api.patch(`/User/block?id=${id}`);
 
     if (response && response.data && response.data.result) {
       return response.data.result;
@@ -20,7 +24,11 @@ export const PaginationUser = async (
   selectedValue: number
 ) => {
   try {
-    const response = await axiosInstance.get(
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("Token not found. Please log in again.");
+    }
+    const response = await api.get(
       `/User?pageSize=${selectedValue}&page=${page}&search=${search}&filter=${filter}`
     );
 
@@ -35,7 +43,11 @@ export const PaginationUser = async (
 
 export const UserDetailsById = async (id: string) => {
   try {
-    const response = await axiosInstance.get(`/User/id?id=${id}`);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("Token not found. Please log in again.");
+    }
+    const response = await api.get(`/User/id?id=${id}`);
 
     if (response && response.data && response.data.result) {
       return response.data;
@@ -48,7 +60,11 @@ export const UserDetailsById = async (id: string) => {
 
 export const TotalUsers = async () => {
   try {
-    const response = await axiosInstance.get("/User");
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("Token not found. Please log in again.");
+    }
+    const response = await api.get("/User");
 
     if (response && response.data && response.data.result) {
       return response.data.result.totalCount;

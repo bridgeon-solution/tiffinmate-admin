@@ -1,8 +1,9 @@
-import axiosInstance from "../api";
+import api from "../api";
 
 export const VerificationApprove = async (id: string) => {
   try {
-    const response = await axiosInstance.post(
+   
+    const response = await api.post(
       `Verification/send-password/${id}`
     );
     if (response && response.data && response.data.result) {
@@ -16,7 +17,8 @@ export const VerificationApprove = async (id: string) => {
 
 export const VerificationRejected = async (id: string) => {
   try {
-    const response = await axiosInstance.post(
+  
+    const response = await api.post(
       `/Verification/removeprovider?providerId=${id}`
     );
 
@@ -31,7 +33,8 @@ export const VerificationRejected = async (id: string) => {
 
 export const BlockUnblockProvider = async (id: string) => {
   try {
-    const response = await axiosInstance.patch(`/Provider/block?id=${id}`);
+    
+    const response = await api.patch(`/Provider/block?id=${id}`);
 
     if (response && response.data && response.data.result) {
       return response.data;
@@ -44,7 +47,8 @@ export const BlockUnblockProvider = async (id: string) => {
 
 export const SearchedProvider = async () => {
   try {
-    const response = await axiosInstance.patch(
+   
+    const response = await api.patch(
       `/Provider/search?search=${name}`
     );
 
@@ -64,8 +68,9 @@ export const PaginationProvider = async (
   selectedValue: number
 ) => {
   try {
+    
 
-    const response = await axiosInstance.get(
+    const response = await api.get(
       `/Provider?pageSize=${selectedValue}&page=${page}&search=${search}&filter=${filter}&verifystatus=approved`
     );
 
@@ -84,7 +89,9 @@ export const PaginationVerification = async (
   selectedValue: number
 ) => {
   try {
-    const response = await axiosInstance.get(
+   
+
+    const response = await api.get(
       `/Provider?pageSize=${selectedValue}&page=${page}&search=${search}&verifystatus=pending`
     );
 
@@ -99,7 +106,8 @@ export const PaginationVerification = async (
 
 export const ProviderDetails = async (id: string) => {
   try {
-    const response = await axiosInstance.get(`/Provider/${id}/details`);
+   
+    const response = await api.get(`/Provider/${id}/details`);
 
     if (response && response.data && response.data.result) {
       return response.data;
@@ -112,7 +120,8 @@ export const ProviderDetails = async (id: string) => {
 
 export const ProviderReviews = async (id: string) => {
   try {
-    const response = await axiosInstance.get(`/Provider/${id}/reviews`);
+   
+    const response = await api.get(`/Provider/${id}/reviews`);
     if (response && response.data && response.data.result) {
       return response.data;
     }
@@ -124,7 +133,8 @@ export const ProviderReviews = async (id: string) => {
 
 export const ProviderMenus = async (id: string) => {
   try {
-    const response = await axiosInstance.get(`/FoodItem/providerid/${id}`);
+   
+    const response = await api.get(`/FoodItem/providerid/${id}`);
     if (response && response.data && response.data.result) {
       return response.data;
     }
@@ -136,7 +146,8 @@ export const ProviderMenus = async (id: string) => {
 
 export const TotalProvider = async () => {
   try {
-    const response = await axiosInstance.get("/Provider");
+   
+    const response = await api.get("/Provider");
     if (response && response.data && response.data.result) {
       return response.data.result.totalCount;
     }

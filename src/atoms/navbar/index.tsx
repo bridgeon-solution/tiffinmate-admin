@@ -99,7 +99,7 @@ const menuItems = [
   { name: "Order List", path: "/orderlist" },
   { name: "Users", path: "/users" },
   { name: "Food Providers", path: "/food-providers" },
-  { name: "Subscriptions", path: "/subscriptions" },
+  { name: "subscription", path: "/subscription" },
   { name: "Vendor Verification", path: "/vendor-verification" },
 ];
 
@@ -123,6 +123,10 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
     setLogoutModalOpen(false);
     
   };
+  const role=localStorage.getItem('name');
+  if (role!='admin') {
+    return <div className="flex items-center justify-center h-screen">Unauthorized</div>;
+  }
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
