@@ -1,29 +1,28 @@
-
-import { Card, CardContent,  Grid, Typography } from '@mui/material';
+import { Card, CardContent, Grid, Typography } from '@mui/material';
 
 interface Notification {
   title: string;
   message: string;
   isRead?: boolean;
 }
-interface NotificationListProps{
-  notifications:Notification[];
-  onClear:() =>void;
+
+interface NotificationListProps {
+  notifications: Notification[];
+  onClear: () => void;
 }
 
-const AdminNotifications:React.FC<NotificationListProps> = ({notifications,onClear}) => {
- 
+const AdminNotifications: React.FC<NotificationListProps> = ({ notifications, onClear }) => {
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ padding: '20px', position: 'relative' }}>
       <Typography variant="h4" gutterBottom style={{ textAlign: 'center', color: '#FF9431' }}>
         Notifications
       </Typography>
       <Typography
         onClick={onClear}
         style={{
-          position:'absolute',
-          top:60,
-          right:30,
+          position: 'absolute',
+          top: 60,
+          right: 30,
           color: '#FF9431',
           textDecoration: 'none',
           cursor: 'pointer',
@@ -40,10 +39,10 @@ const AdminNotifications:React.FC<NotificationListProps> = ({notifications,onCle
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                padding: '5px',
+                padding: '10px',
                 backgroundColor: '#f9f9f9',
                 borderRadius: '8px',
-                opacity: notification.isRead ? 0.6 : 1, 
+                opacity: notification.isRead ? 0.6 : 1,
               }}
             >
               <CardContent style={{ flex: '1' }}>
@@ -54,7 +53,6 @@ const AdminNotifications:React.FC<NotificationListProps> = ({notifications,onCle
                   {notification.message}
                 </Typography>
               </CardContent>
-              
             </Card>
           </Grid>
         ))}
