@@ -27,7 +27,6 @@ const Subscriptiondetails:React.FC<SubscriptionDetailsProps> = ({menuId,category
       try {
         const response = await GetAllFoodItems(menuId, categoryId);
         setFoodData(response.result || []);
-        console.log(response)
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -46,7 +45,6 @@ const Subscriptiondetails:React.FC<SubscriptionDetailsProps> = ({menuId,category
       "Friday",
       "Saturday",
     ];
-console.log(categoryId)
     const groupedData: Record<string, Record<string, string>> = {};
 
     daysOfWeek.forEach((day) => {
