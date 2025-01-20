@@ -35,7 +35,7 @@ export default function OrdersAndRevenueComparison() {
 
       res.forEach((detail: detailsProp) => {
         const { date, total_price } = detail;
-        const month = new Date(date).toLocaleString("default", { month: "short" }); // Use short month names
+        const month = new Date(date).toLocaleString("default", { month: "short" }); 
 
         if (monthlyRevenue[month]) {
           monthlyRevenue[month] += total_price;
