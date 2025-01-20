@@ -17,7 +17,7 @@ const PieCard: React.FC = () => {
   const [totalSubscriptionRevenue,setTotalSubscriptionRevenue]=useState(0);
 
   const FetchSubscriptionRevenue=async()=>{
-    const total=await GetTotalRevenueSubscription();
+    const total=await GetTotalRevenueSubscription(totalOrder);
       setTotalSubscriptionRevenue(total);
   
   }
@@ -36,15 +36,17 @@ const PieCard: React.FC = () => {
   }, []);
 
   const revenue=totalSubscriptionRevenue+totalRevenue;
-  const balancedRevenue=100-totalRevenue;
-  const balancedOrder=100-totalOrder;
+  const percentageOfRevenue=Math.ceil(revenue/100*10)
+  const percentageOfOrder=Math.ceil(totalOrder/100*10)
+  const balancedRevenue=100-percentageOfRevenue;
+  const balancedOrder=100-percentageOfOrder;
 
   const ordersData = [
-    { id: "Completed Orders", value: totalOrder, label: "Completed", color: "#ffa726" },
+    { id: "Completed Orders", value: percentageOfOrder, label: "Completed", color: "#ffa726" },
     { id: "Pending Orders", value: balancedOrder, label: "Pending", color: "#ff7043" },
   ];
   const revenueData = [
-    { id: "Revenue Generated", value: revenue, label: "Generated", color: "green" },
+    { id: "Revenue Generated", value: percentageOfRevenue, label: "Generated", color: "green" },
     { id: "Revenue Pending", value: balancedRevenue, label: "Pending", color: "#ff7043" },
   ];
 

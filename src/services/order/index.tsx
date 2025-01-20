@@ -95,7 +95,7 @@ export const GetSubscrition = async (page:number,selectedValue:number,search:str
       const response = await api.get(
         `/Order?page=${1}&pageSize=${totalOrder}`
       );
-     
+
       if (response && response.data && response.data.result) {
         const allDetails = response.data.result.allDetails;
         const totalRevenue = allDetails.reduce((sum: number, order: { total_price: number }) => {
@@ -112,11 +112,11 @@ export const GetSubscrition = async (page:number,selectedValue:number,search:str
   };
 
 
-  export const GetTotalRevenueSubscription = async () => {
+  export const GetTotalRevenueSubscription = async (totalOrder:number) => {
     try {
       
       const response = await api.get(
-        `/Subscription?page=${1}&pageSize=${10}`
+        `/Subscription?page=${1}&pageSize=${totalOrder}`
       );
       if (response && response.data && response.data.result) {
         const allDetails = response.data.result.allDetails;
@@ -127,6 +127,37 @@ export const GetSubscrition = async (page:number,selectedValue:number,search:str
         return totalRevenue;
 
         
+        
+      }
+      return null;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+
+  export const GetMonthlyRevenue = async (totalOrder:number) => {
+    try {
+      const response = await api.get(
+        `/Order?page=${1}&pageSize=${totalOrder}`
+      );
+      if (response && response.data && response.data.result) {
+      return response.data.result.allDetails;
+      }
+      return null;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  export const GetMonthlySubscriptionRevenue = async (totalOrder:number) => {
+    try {
+      
+      const response = await api.get(
+        `/Subscription?page=${1}&pageSize=${totalOrder*2}`
+      );
+      if (response && response.data && response.data.result) {
+       return response.data.result.allDetails;
         
       }
       return null;

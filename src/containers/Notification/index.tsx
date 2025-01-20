@@ -10,9 +10,10 @@ interface Notification {
     isRead: boolean;
 }
 
-const AdminNotificationContainer = () => {
+const AdminNotificationContainer:React.FC =()  => {
     const [connection, setConnection] = useState<HubConnection | null>(null);
-    const [notifications, setNotifications] = useState<Notification[]>([]);
+    const [Notifications,setNotifications]=useState<Notification[]>([]);
+
     const HUBURL= import.meta.env.VITE_HUB_URL;
 
     const loadNotification = async () => {
@@ -32,6 +33,7 @@ const AdminNotificationContainer = () => {
            throw err;
         }
     };
+
     useEffect(() => {
         loadNotification(); 
         if (!connection) {
@@ -69,7 +71,7 @@ const AdminNotificationContainer = () => {
     }, []); 
 
     return (
-        <AdminNotifications notifications={notifications} onClear={handleClearAll} />
+        <AdminNotifications notification={Notifications} onClear={handleClearAll} />
     );
 };
 
