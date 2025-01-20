@@ -28,7 +28,7 @@ const FetchProviders=async()=>{
 }
 
 const FetchSubscriptionRevenue=async()=>{
-  const total=await GetTotalRevenueSubscription();
+  const total=await GetTotalRevenueSubscription(totalOrder);
     setTotalSubscriptionRevenue(total);
 
 }
