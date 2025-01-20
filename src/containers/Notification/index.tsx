@@ -10,7 +10,7 @@ interface Notification {
     isRead: boolean;
 }
 
-const AdminNotificationContainer:React.FC<{setUnreadCount: React.Dispatch<React.SetStateAction<number>>; }> =({setUnreadCount })  => {
+const AdminNotificationContainer:React.FC =()  => {
     const [connection, setConnection] = useState<HubConnection | null>(null);
     const [Notifications,setNotifications]=useState<Notification[]>([]);
 
@@ -20,8 +20,6 @@ const AdminNotificationContainer:React.FC<{setUnreadCount: React.Dispatch<React.
         try {
             const data = await GetAdminNotification();
             setNotifications(data);
-            const unread = data.filter((notif) => !notif.isRead).length;
-            setUnreadCount(unread);
         } catch (err) {
             throw err;
         }
@@ -31,18 +29,10 @@ const AdminNotificationContainer:React.FC<{setUnreadCount: React.Dispatch<React.
         try {
             await clearallnotification();
             setNotifications([]); 
-            setUnreadCount(0);
         } catch (err) {
            throw err;
         }
     };
-
-    const handleIsReadNotication=(index:number)=>{
-         const updatedNotification=[...Notifications];
-         updatedNotification[index].isRead = true;
-         setUnreadCount((prev) => Math.max(prev - 1, 0));
-         setNotifications(updatedNotification);
-    }
 
     useEffect(() => {
         loadNotification(); 
@@ -65,7 +55,6 @@ const AdminNotificationContainer:React.FC<{setUnreadCount: React.Dispatch<React.
                             ...prevNotifications,
                             { title, message, isRead: false },
                         ]);
-                        setUnreadCount((prev) => prev + 1);
                         toast.info(`${message}`);
                     });
                 })
@@ -82,7 +71,7 @@ const AdminNotificationContainer:React.FC<{setUnreadCount: React.Dispatch<React.
     }, []); 
 
     return (
-        <AdminNotifications notification={Notifications} onClear={handleClearAll} setIsRead={handleIsReadNotication} />
+        <AdminNotifications notification={Notifications} onClear={handleClearAll} />
     );
 };
 

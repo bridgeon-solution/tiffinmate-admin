@@ -112,7 +112,6 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
  
   const handleLogoutOpen = () => setLogoutModalOpen(true);
   const handleLogoutClose = () => setLogoutModalOpen(false);
-  const [unreadCount, setUnreadCount] = useState(0);
   
 
   const navigate=useNavigate();
@@ -124,7 +123,6 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
 
   const handleNotificationClick = () => {
     navigate("/notification");
-    setUnreadCount(0);
   };
 
   const handleLogoutConfirm = () => {
@@ -226,7 +224,6 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
       >
         <Box sx={{ position: "absolute", top: 20, right: 80} } >
         <NotificationsActiveIcon sx={{ fontSize: 25 }} onClick={handleNotificationClick} />
-        {unreadCount>0 && (
         <Box
               sx={{
                 position: "absolute",
@@ -243,9 +240,7 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
                 alignItems: "center",
               }}
             >
-              {unreadCount}
             </Box>
-          )}
         </Box>
 
         <LogoutOutlinedIcon onClick={handleLogoutOpen}

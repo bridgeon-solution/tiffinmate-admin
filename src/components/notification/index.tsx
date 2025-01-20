@@ -9,13 +9,12 @@ interface Notification {
 interface NotificationListProps {
   notification?: Notification[];
   onClear: () => void;
-  setIsRead(index: number): void;
 }
 
 const AdminNotifications: React.FC<NotificationListProps> = ({
   notification=[],
   onClear,
-  setIsRead,
+  
 }) => {
   return (
     <div style={{ padding: '20px', position: 'relative' }}>
@@ -59,7 +58,6 @@ const AdminNotifications: React.FC<NotificationListProps> = ({
                     borderRadius: '8px',
                     opacity: notification.isRead ? 0.6 : 1,
                   }}
-                  onClick={() => setIsRead(index)}
                 >
                   <CardContent style={{ flex: '1' }}>
                     <Typography variant="h5" color="#e6852c" gutterBottom>
