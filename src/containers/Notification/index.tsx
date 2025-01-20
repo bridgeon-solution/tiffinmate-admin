@@ -10,15 +10,18 @@ interface Notification {
     isRead: boolean;
 }
 
-const AdminNotificationContainer = () => {
+const AdminNotificationContainer:React.FC<{setUnreadCount: React.Dispatch<React.SetStateAction<number>>; }> =({setUnreadCount })  => {
     const [connection, setConnection] = useState<HubConnection | null>(null);
-    const [notifications, setNotifications] = useState<Notification[]>([]);
+    const [Notifications,setNotifications]=useState<Notification[]>([]);
+
     const HUBURL= import.meta.env.VITE_HUB_URL;
 
     const loadNotification = async () => {
         try {
             const data = await GetAdminNotification();
             setNotifications(data);
+            const unread = data.filter((notif) => !notif.isRead).length;
+            setUnreadCount(unread);
         } catch (err) {
             throw err;
         }
@@ -28,10 +31,19 @@ const AdminNotificationContainer = () => {
         try {
             await clearallnotification();
             setNotifications([]); 
+            setUnreadCount(0);
         } catch (err) {
            throw err;
         }
     };
+
+    const handleIsReadNotication=(index:number)=>{
+         const updatedNotification=[...Notifications];
+         updatedNotification[index].isRead = true;
+         setUnreadCount((prev) => Math.max(prev - 1, 0));
+         setNotifications(updatedNotification);
+    }
+
     useEffect(() => {
         loadNotification(); 
         if (!connection) {
@@ -53,6 +65,7 @@ const AdminNotificationContainer = () => {
                             ...prevNotifications,
                             { title, message, isRead: false },
                         ]);
+                        setUnreadCount((prev) => prev + 1);
                         toast.info(`${message}`);
                     });
                 })
@@ -69,7 +82,7 @@ const AdminNotificationContainer = () => {
     }, []); 
 
     return (
-        <AdminNotifications notifications={notifications} onClear={handleClearAll} />
+        <AdminNotifications notification={Notifications} onClear={handleClearAll} setIsRead={handleIsReadNotication} />
     );
 };
 

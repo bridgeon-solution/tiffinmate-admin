@@ -23,6 +23,7 @@ import ConfirmModal from "../confirmboxmodal";
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
 
+
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -108,8 +109,10 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+ 
   const handleLogoutOpen = () => setLogoutModalOpen(true);
   const handleLogoutClose = () => setLogoutModalOpen(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   
 
   const navigate=useNavigate();
@@ -121,6 +124,7 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
 
   const handleNotificationClick = () => {
     navigate("/notification");
+    setUnreadCount(0);
   };
 
   const handleLogoutConfirm = () => {
@@ -222,17 +226,26 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
       >
         <Box sx={{ position: "absolute", top: 20, right: 80} } >
         <NotificationsActiveIcon sx={{ fontSize: 25 }} onClick={handleNotificationClick} />
-          <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-              width: 10,
-              height: 10,
-              backgroundColor: "#FF9431",
-              borderRadius: "50%",
-            }}
-          ></Box>
+        {unreadCount>0 && (
+        <Box
+              sx={{
+                position: "absolute",
+                top: -5,
+                right: -5,
+                width: 16,
+                height: 16,
+                backgroundColor: "#FF9431",
+                borderRadius: "50%",
+                color: "white",
+                fontSize: "12px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {unreadCount}
+            </Box>
+          )}
         </Box>
 
         <LogoutOutlinedIcon onClick={handleLogoutOpen}
@@ -245,7 +258,9 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
       />
         {/* <DrawerHeader /> */}
         {children}
-      </Box>
+        
+      </Box>   
     </Box>
+    
   );
 }

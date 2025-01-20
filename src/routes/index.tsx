@@ -45,8 +45,8 @@ const AppRouter: React.FC = () => {
                   <Route path="subscription" element={<SubscriptionPage />} />
                   <Route path="vendor-verification" element={<VendorVerificationPage />} />
                   <Route path="/food-providers/details/:id" element={<Providerdetailspage/>}/>
-                  <Route path="/notification" element={<Notificationpage />} />
-                </Routes>
+                  <Route path="/notification" element={<Notificationpage/>}/>
+              </Routes>
               </NavBar>
             }
           />
