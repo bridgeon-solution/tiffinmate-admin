@@ -77,6 +77,7 @@ const AdminNotifications: React.FC<NotificationListProps> = ({
               textAlign: 'center',
               color: '#777',
               marginTop: '20px',
+              
             }}
           >
             No new notifications
