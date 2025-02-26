@@ -8,22 +8,32 @@ import Subscriptionorders from "../../components/subscription/subscriptionorders
 import BasicModal from "../../atoms/modal";
 import Subscriptiondetails from "../../components/subscription/subscriptiondetails";
 
-interface SubscriptionDetail {
-  category_id: string;
+interface FoodItem {
+  food_name: string;
+  price: number;
+  description: string;
+  day: string;
+  image: string;
 }
-interface Subscription {
-  city: string;
-  user: string;
-  provider: string;
-  total_price: boolean;
-  date: string;
-  order_id: string;
-  cancelled_at:string;
-  payment_status:boolean;
-  menu_id:string;
-  details: SubscriptionDetail[];
 
+interface Category {
+  category_name: string;
+  food_Items: FoodItem[];
 }
+
+interface Subscription {
+  user_name: string;
+  provider_name: string;
+  address: string | null;
+  city: string | null;
+  ph_no: string;
+  category: Category[];
+  menu_name: string;
+  total_price: number;
+  start_date: string;
+  is_active: boolean;
+}
+
 
 const SubscriptionContainer: React.FC = () => {
   const [orderData, setOrderData] = useState<Subscription[] | null>(null);
@@ -48,7 +58,7 @@ const SubscriptionContainer: React.FC = () => {
     try {
       const response = await GetSubscrition(page, selectedValue, search, filter);
       if (response && response.result) {
-        setOrderData(response.result.allDetails);
+        setOrderData(response.result.allsubscription);
         setTotalProviders(response.result.totalCount);
       }
     } catch (error) {
