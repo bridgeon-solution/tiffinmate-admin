@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { ProviderReviews } from "../../services/provider";
+import { FetchProviderReviews } from "../../services/provider";
 import { toast } from "react-toastify";
 import { Box, Grid, Typography, Avatar } from "@mui/material";
 import { Card } from "@mui/material";
@@ -28,7 +28,7 @@ const Providerreview: React.FC<ProviderDetailsProps> = ({
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await ProviderReviews(providerId);
+        const response = await FetchProviderReviews(providerId);
         if (response && response.result) {
           setReviewDetails(response.result);
         }

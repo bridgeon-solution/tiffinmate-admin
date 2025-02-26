@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { PaginationProvider } from "../../services/provider";
+import { FetchTransaction, PaginationProvider } from "../../services/provider";
 import Providertable from "../../components/provider/providertable";
 import { toast } from "react-toastify";
 import { Box, CircularProgress, SelectChangeEvent } from "@mui/material";
 import { BlockUnblockProvider } from "../../services/provider";
+import Providerdetailspage from "../../components/provider/providerDetails";
+import { Provider, Transaction } from "../../components/provider/type";
+import TransactionHistory from "../../components/provider/transactionHistory";
 
-interface Provider {
-  id: string;
-  email: string;
-  user_name: string;
-  verification_status: string;
-  is_blocked: boolean;
-}
+
+
 const VendorContainer: React.FC = () => {
   const [providerData, setProviderData] = useState<Provider[] | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -20,6 +18,9 @@ const VendorContainer: React.FC = () => {
   const [totalProviders, setTotalProviders] = useState<number>(1);
 
   const [selectedValue, setSelectedValue] = useState<number>(10);
+
+
+ 
 
   const FetchUser = async (
     page: number,
@@ -64,6 +65,9 @@ const VendorContainer: React.FC = () => {
   useEffect(() => {
     FetchUser(1, search, filter, selectedValue);
   }, [filter, search, selectedValue]);
+  useEffect(() => {
+    console.log("Drawer open:", open);
+  }, [open]);
 
   return (
     <>
@@ -91,6 +95,7 @@ const VendorContainer: React.FC = () => {
       </Box>
 
       )}
+      
     </>
   );
 };

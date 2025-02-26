@@ -19,14 +19,7 @@ import FilterBox from "../../atoms/filtrer";
 import PaginationRounded from "../../atoms/pagination";
 import { useNavigate } from "react-router-dom";
 import { Select } from "@mui/material";
-
-interface Provider {
-  email: string;
-  user_name: string;
-  id: string;
-  verification_status: string;
-  is_blocked: boolean;
-}
+import { Provider } from "./type";
 
 interface ProviderTableProps {
   provider: Provider[];
@@ -77,7 +70,7 @@ const Providertable: React.FC<ProviderTableProps> = ({
     totalPage = Math.ceil(totalProviders / selectedValue);
   }
   const handleDetailsPage = (vendor: Provider) => {
-    navigate(`/food-providers/details/${vendor.id}`, { state: vendor });
+    navigate(`/food-providers/details/${vendor.id}`);
   };
 
   return (

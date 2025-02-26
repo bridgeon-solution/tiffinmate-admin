@@ -104,7 +104,7 @@ export const PaginationVerification = async (
   }
 };
 
-export const ProviderDetails = async (id: string) => {
+export const FetchProviderDetails = async (id: string) => {
   try {
    
     const response = await api.get(`/Provider/${id}/details`);
@@ -118,7 +118,7 @@ export const ProviderDetails = async (id: string) => {
   }
 };
 
-export const ProviderReviews = async (id: string) => {
+export const FetchProviderReviews = async (id: string) => {
   try {
    
     const response = await api.get(`/Provider/${id}/reviews`);
@@ -131,7 +131,7 @@ export const ProviderReviews = async (id: string) => {
   }
 };
 
-export const ProviderMenus = async (id: string) => {
+export const FetchProviderMenus = async (id: string) => {
   try {
    
     const response = await api.get(`/FoodItem/providerid/${id}`);
@@ -156,3 +156,15 @@ export const TotalProvider = async () => {
     throw error;
   }
 };
+
+export const FetchTransaction=async(id:string)=>{
+  try {  
+    const response = await api.get(`/Provider/Payment/${id}?pageSize=12`);
+    if (response && response.data && response.data.result) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    throw error;
+  }
+}

@@ -4,88 +4,32 @@ import { StyledTable } from "../../atoms/table";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useLocation, useParams } from "react-router-dom";
-import { ProviderDetails, ProviderMenus } from "../../services/provider";
+
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import BasicModal from "../../atoms/modal";
 import Providerreview from "./providerreview";
+import { Provider, ProviderDetails, ProviderMenu, Transaction } from "./type";
 
-interface ProviderDetails {
-  username: string;
-  email: string;
-  address: string;
-  phone_no: string;
-  image: string;
-  resturent_name: string;
+interface ProviderDetailsComponentProps{
+  providerDetails:ProviderDetails;
+  providerMenu:ProviderMenu[];
+  handleViewCertificate : (certificate: string) =>void
+  handleReviews:()=>void;
+  handleTransactions:()=>void;
+  handleCloseModal:()=>void;
+  openModal:boolean;
+  loading:boolean;
+  transactions:Transaction[]
+
+  // selectedProviderId:string| null;
+  // setSelectedProviderId: (id: string) => void;
+  // toggleDrawer: (newOpen: boolean) => void;
 }
-interface ProviderMenu {
-  food_name: string;
-  price: number;
-  menu_name: string;
-  category_name: string;
-  image: string;
-}
-
-const Providerdetailspage: React.FC = () => {
-  const location = useLocation();
-  const provider = location.state;
-  const [providerDetails, setProviderDetails] =
-    useState<ProviderDetails | null>(null);
-  const [providerMenu, setProviderMenu] = useState<ProviderMenu[]>([]);
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [selectedProviderId, setSelectedProviderId] = useState<string | null>(
-    null
-  );
-  const { id } = useParams();
-  if (!provider) {
-    return <div>No provider details available</div>;
-  }
-
-  useEffect(() => {
-    const fetchProviderDetails = async () => {
-      try {
-        const response = await ProviderDetails(id || "");
-
-        if (response && response.result) {
-          setProviderDetails(response.result);
-        }
-      } catch (error) {
-        toast.error("error fetching details of users");
-      }
-    };
-    fetchProviderDetails();
-  }, [id]);
-
-  useEffect(() => {
-    const fetchMenuDetails = async () => {
-      try {
-        const response = await ProviderMenus(id || "");
-
-        if (response && response.result) {
-          setProviderMenu(response.result);
-        }
-      } catch (error) {
-        toast.error("error fetching details of users");
-      }
-    };
-    fetchMenuDetails();
-  }, [id]);
-  
-
-  const handleViewCertificate = (certificate: string) => {
-    window.open(certificate, "_self");
-  };
-
-  const handleDetails = (id: string) => {
-    setSelectedProviderId(id);
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-    setSelectedProviderId(null);
-  };
-
+const ProviderDetailsComponent: React.FC<ProviderDetailsComponentProps> = ({providerDetails,providerMenu,handleViewCertificate,handleReviews,handleTransactions,handleCloseModal,openModal}) => {
+  const {id}= useParams()
+  const providerId=id ||""
   return (
+   
     <Box sx={{ padding: 4, minHeight: "100vh" }} mt={3}>
       <Typography variant="h5" sx={{ fontWeight: "bold", color: "#FF9431" }}>
         Vendor Management
@@ -100,7 +44,7 @@ const Providerdetailspage: React.FC = () => {
         }}
       >
         <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: 2 }}>
-          {provider.user_name}
+          {providerDetails?.username}
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4} md={2} display="flex" justifyContent="center">
@@ -131,7 +75,7 @@ const Providerdetailspage: React.FC = () => {
             <Grid item xs={12} sm={6} md={3}>
             <Typography variant="body1" color="#808080" sx={{ marginBottom: 1 }}>
                 <strong>Name:</strong>
-                <br /> {provider.user_name}
+                <br /> {providerDetails?.username}
               </Typography>
             </Grid>
             
@@ -139,7 +83,7 @@ const Providerdetailspage: React.FC = () => {
             <Typography variant="body1" color="#808080" sx={{ marginBottom: 1 }}>
                 <strong>Email:</strong>
                 <br />
-                <span style={{ wordWrap: "break-word" }}>{provider.email}</span>
+                <span style={{ wordWrap: "break-word" }}>{providerDetails?.email}</span>
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
@@ -148,18 +92,28 @@ const Providerdetailspage: React.FC = () => {
                 <br /> +91 {providerDetails?.phone_no}
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6} md={3} display="flex" alignItems="center">
+            <Grid item xs={12} sm={6} md={3} display="flex" flexDirection={"column"}>
+              <Grid >
               <Button
                 sx={{ cursor: "pointer" }}
-                onClick={() => handleDetails(id || "")}
+                onClick={handleReviews}
               >
                 Reviews
               </Button>
+              </Grid>
+              <Grid>
+              <Button
+                sx={{ cursor: "pointer" }}
+                onClick={handleTransactions}
+              >
+                Transactions
+              </Button>
+              </Grid>
+              
+              
             </Grid>
             </Grid>
               </Grid>
-              <br />
-              
                <Grid container spacing={2}>
             <Grid item xs={12} sm={6} md={3}>
               <Typography variant="body1" color="#808080">
@@ -185,7 +139,7 @@ const Providerdetailspage: React.FC = () => {
                 <br />
                 <RemoveRedEyeOutlinedIcon
                   style={{ cursor: "pointer" }}
-                  onClick={() => handleViewCertificate(provider.certificate)}
+                  onClick={() => handleViewCertificate(providerDetails?.certificate)}
                   sx={{ color: "#6464FF" }}
                 />
               </Typography>
@@ -239,10 +193,10 @@ const Providerdetailspage: React.FC = () => {
           </StyledTable>
         </Box>
       </Box>
-      {openModal && selectedProviderId && (
+      {openModal && (
         <BasicModal open={openModal} handleClose={handleCloseModal}>
           <Providerreview
-            providerId={selectedProviderId}
+            providerId={providerId}
             handleClose={handleCloseModal}
           />
         </BasicModal>
@@ -251,4 +205,4 @@ const Providerdetailspage: React.FC = () => {
   );
 };
 
-export default Providerdetailspage;
+export default ProviderDetailsComponent;
