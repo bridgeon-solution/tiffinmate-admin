@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, MenuItem, Typography } from "@mui/material";
+import { Box, Grid, MenuItem, Paper, Table, TableBody,  Modal, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { StyledTable } from "../../atoms/table";
 import { StyledSearchBar } from "../../atoms/search";
 import { StyledInputBase } from "../../atoms/search";
@@ -11,23 +11,37 @@ import { useState } from "react";
 import PaginationRounded from "../../atoms/pagination";
 import { Tooltip, IconButton, Select } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
+import { Visibility } from "@mui/icons-material";
 // import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 
-interface SubscriptionDetail {
-  category_id: string;
+// interface SubscriptionDetail {
+//   category_id: string;
+// }
+interface FoodItem {
+  food_name: string;
+  price: number;
+  description: string;
+  day: string;
+  image: string;
 }
-interface Subscription {
-  user: string;
-  provider: string;
-  total_price: boolean;
-  date: string;
-  order_id: string;
-  cancelled_at: string;
-  payment_status: boolean;
-  menu_id:string;
-  details: SubscriptionDetail[];
 
+interface Category {
+  category_name: string;
+  food_Items: FoodItem[];
 }
+
+interface Subscription {
+  user_name: string;
+  address: string | null;
+  city: string | null;
+  ph_no: string;
+  category?: Category[]; 
+  menu_name: string;
+  total_price: number;
+  start_date: string;
+  is_active: boolean;
+}
+
 
 interface SubscriptionTableProps {
   order: Subscription[];
@@ -61,6 +75,13 @@ const Subscriptionorders: React.FC<SubscriptionTableProps> = ({
     setFilter(newStatus);
   };
 
+  
+  const handleCloseModal = () => {
+    setOpen(false);
+    setSelectedCategories([]);
+  };
+
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSearch = e.target.value;
     setSearch(newSearch);
@@ -78,7 +99,14 @@ const Subscriptionorders: React.FC<SubscriptionTableProps> = ({
   } else {
     totalPage = Math.ceil(totalOrders / selectedValue);
   }
+  const [open, setOpen] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
 
+
+ const handleOpenModal = (categories: Category[] | undefined) => {
+    setSelectedCategories(categories ?? []); 
+    setOpen(true);
+  };
   return (
     <>
       <Box
@@ -168,27 +196,34 @@ const Subscriptionorders: React.FC<SubscriptionTableProps> = ({
               <th>Start Date</th>
               <th>End Date</th>
               <th>Status</th>
+              <th>View</th>
             </tr>
           </thead>
           <tbody>
             {order.length > 0 ? (
               order.map((od) => (
                 <tr>
-                  <td>{od.user}</td>
+                  <td>{od.user_name}</td>
                   <td>{od.total_price}</td>
-                  <td>{od.provider}</td>
-                  <td>{new Date(od.date).toLocaleDateString()}</td>
+                  {/* <td>{od.provider}</td> */}
+                  <td>shamna</td>
+                  <td>{new Date(od.start_date).toLocaleDateString()}</td>
                   <td>
-                    {od.cancelled_at
-                      ? new Date(od.cancelled_at).toLocaleDateString()
+                    {od.start_date
+                      ? new Date(od.start_date).toLocaleDateString()
                       : "...."}
                   </td>
                   <td>
-                    {od.cancelled_at ? (
+                    {od.start_date ? (
                       <span style={{ color: "red" }}>Expired</span>
                     ) : (
                       <span style={{ color: "green" }}>Active</span>
                     )}
+                  </td>
+                  <td>
+                    <IconButton onClick={() => handleOpenModal(od.category)} color="primary">
+                      <Visibility />
+                    </IconButton>
                   </td>
                   {/* <td>
   {od.details && od.details.length > 0 && (
@@ -210,6 +245,62 @@ const Subscriptionorders: React.FC<SubscriptionTableProps> = ({
             )}
           </tbody>
         </StyledTable>
+        <Modal open={open} onClose={handleCloseModal} aria-labelledby="food-modal-title">
+        <Box
+          sx={{
+            p: 3,
+            bgcolor: "white",
+            width: "60%",
+            maxHeight: "80vh",
+            overflowY: "auto",
+            margin: "auto",
+            mt: 5,
+            borderRadius: 2,
+          }}
+        >
+          <Typography id="food-modal-title" variant="h6" gutterBottom>
+            Food Items 
+          </Typography>
+          {selectedCategories.length > 0 ? (
+            selectedCategories.map((category, idx) => (
+              <Box key={idx} mb={3}>
+                <Typography variant="h6" color="primary">
+                  {category.category_name}
+                </Typography>
+                <TableContainer component={Paper} sx={{ maxHeight: "400px", overflowY: "auto" }}>
+                  <Table>
+                    <TableHead sx={{ bgcolor: "lightgray" }}>
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold", textAlign: "center", p: 2 }}>Day</TableCell>
+                        <TableCell sx={{ fontWeight: "bold", textAlign: "center", p: 2 }}>Food Name</TableCell>
+                        <TableCell sx={{ fontWeight: "bold", textAlign: "center", p: 2 }}>Price</TableCell>
+                        <TableCell sx={{ fontWeight: "bold", textAlign: "center", p: 2 }}>Description</TableCell>
+                        <TableCell sx={{ fontWeight: "bold", textAlign: "center", p: 2 }}>Image</TableCell>
+                      </TableRow>
+                    </TableHead>
+
+                    <TableBody>
+                      {category.food_Items.map((food, foodIdx) => (
+                        <TableRow key={foodIdx}>
+                          <TableCell>{food.day}</TableCell>
+                          <TableCell>{food.food_name}</TableCell>
+                          <TableCell>${food.price.toFixed(2)}</TableCell>
+                          <TableCell>{food.description}</TableCell>
+                          <TableCell>
+                            <img src={food.image} alt={food.food_name} width="50" height="50" style={{ borderRadius: "5px" }} />
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Box>
+            ))
+          ) : (
+            <Typography>No Food Items Available</Typography>
+          )}
+        </Box>
+      </Modal>
 
         <Box display="flex" gap={4} alignItems="center" mt={2}>
           <PaginationRounded
