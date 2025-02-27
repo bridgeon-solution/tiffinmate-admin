@@ -29,6 +29,8 @@ const Subscriptiondetails:React.FC<SubscriptionDetailsProps> = ({menuId,category
         setFoodData(response.result || []);
         setLoading(false);
       } catch (err) {
+        console.log(err);
+        
         setLoading(false);
       }
     };
