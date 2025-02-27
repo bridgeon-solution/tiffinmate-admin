@@ -7,7 +7,7 @@ export interface Transaction {
 }
 
 export interface ProviderDetails {
-  username: string;
+  user_name: string;
   email: string;
   address: string;
   phone_no: string;

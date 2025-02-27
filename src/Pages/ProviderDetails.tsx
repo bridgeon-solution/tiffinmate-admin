@@ -1,5 +1,5 @@
 import React from "react"
-import ProviderDetailsContainer from "../Containers/ProviderDetailsComponent"
+import ProviderDetailsContainer from "../Containers/ProviderDetailsContainer"
 
 
 const ProviderDetailsPage:React.FC=()=> {

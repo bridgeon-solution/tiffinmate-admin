@@ -1,4 +1,4 @@
-import UserContainer from '../Containers/UsersComponent/input'
+import UserContainer from '../Containers/UsersContainer/input'
 
 const Users = () => {
   return (

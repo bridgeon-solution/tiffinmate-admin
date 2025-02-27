@@ -1,4 +1,4 @@
-import ProviderContainer from '../Containers/VerificationComponent/input'
+import ProviderContainer from '../Containers/VerificationContainer/input'
 
 const Vendorverificationpage = () => {
   return (

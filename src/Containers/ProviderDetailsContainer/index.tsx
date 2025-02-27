@@ -12,7 +12,7 @@ const ProviderDetailsContainer=()=> {
     const [openModal, setOpenModal] = useState<boolean>(false);
       const [open, setOpen] = React.useState(false);
       const [providerDetails, setProviderDetails] =
-        useState<ProviderDetails>({username: "",
+        useState<ProviderDetails>({user_name: "",
             email: "",
             address: "",
             phone_no: "",

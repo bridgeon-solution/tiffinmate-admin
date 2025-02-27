@@ -1,5 +1,5 @@
 import React from 'react'
-import SubscriptionContainer from '../Containers/SubscriptionComponent'
+import SubscriptionContainer from '../Containers/SubscriptionContainer'
 
 const SubscriptionPage :React.FC= () => {
   return (

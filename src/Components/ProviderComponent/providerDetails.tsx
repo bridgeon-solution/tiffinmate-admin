@@ -44,7 +44,7 @@ const ProviderDetailsComponent: React.FC<ProviderDetailsComponentProps> = ({
         }}
       >
         <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: 2 }}>
-          {providerDetails?.username}
+          {providerDetails?.user_name}
         </Typography>
         <Grid container spacing={3}>
           <Grid
@@ -86,7 +86,7 @@ const ProviderDetailsComponent: React.FC<ProviderDetailsComponentProps> = ({
                       sx={{ marginBottom: 1 }}
                     >
                       <strong>Name:</strong>
-                      <br /> {providerDetails?.username}
+                      <br /> {providerDetails?.user_name}
                     </Typography>
                   </Grid>
 
