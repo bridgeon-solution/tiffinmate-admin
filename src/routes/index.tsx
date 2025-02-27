@@ -4,16 +4,16 @@ import { lazy, Suspense } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 import { CircularProgress, Box } from "@mui/material";
-import SubscriptionPage from '../pages/subscriptionPage';
-import Notificationpage from '../pages/notificationpage';
-import ProviderDetailsPage from '../pages/providerDetailsPage';
-const NavBar = lazy(() => import('../atoms/navbar'));
-const DashboardPage = lazy(() => import('../pages/dashboardPage'));
-const Orderlist = lazy(() => import('../pages/orderpage'));
-const Users = lazy(() => import('../pages/users'));
-const LoginPage = lazy(() => import('../pages/loginPage'));
-const VendorVerificationPage = lazy(() => import('../pages/providerverificationpage'));
-const VendorPage = lazy(() => import('../pages/providerPage'));
+import SubscriptionPage from '../Pages/Subscription';
+import Notificationpage from '../Pages/Notification';
+import ProviderDetailsPage from '../Pages/ProviderDetails';
+const NavBar = lazy(() => import('../Atoms/Navbar'));
+const DashboardPage = lazy(() => import('../Pages/Dashboard'));
+const Orderlist = lazy(() => import('../Pages/Order'));
+const Users = lazy(() => import('../Pages/User'));
+const LoginPage = lazy(() => import('../Pages/Login'));
+const VendorVerificationPage = lazy(() => import('../Pages/ProviderVerification'));
+const VendorPage = lazy(() => import('../Pages/Provider'));
 
 const AppRouter: React.FC = () => {
   return (

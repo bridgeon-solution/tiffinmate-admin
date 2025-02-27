@@ -18,8 +18,8 @@ import PeopleIcon from "@mui/icons-material/People";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import DrawerHeader from "../drawer";
-import ConfirmModal from "../confirmboxmodal";
+import DrawerHeader from "../Drawer";
+import ConfirmModal from "../ConfirmBoxModal";
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
 

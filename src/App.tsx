@@ -1,5 +1,5 @@
 
-import AppRouter from './routes';
+import AppRouter from './Routes';
 
 function App() {
   return <AppRouter />;
