@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "src/atoms/button/.tsx"]
+  "include": ["src", "src/Atoms/button/.tsx"]
 }
