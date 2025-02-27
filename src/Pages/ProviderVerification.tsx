@@ -7,5 +7,4 @@ const Vendorverificationpage = () => {
     </div>
   )
 }
-
 export default Vendorverificationpage

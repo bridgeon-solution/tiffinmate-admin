@@ -1,12 +1,12 @@
 import React from 'react'
-import Dailyorder from '../../Components/OrderComponent/dailyorder'
 import { useState,useEffect } from 'react';
 import { GetOrders } from '../../Services/OrderService';
 import { toast } from 'react-toastify';
 import { SelectChangeEvent,Box, CircularProgress } from '@mui/material';
 import * as XLSX from 'xlsx';
 import BasicModal from '../../Atoms/Modal';
-import Orderdetails from '../../Components/OrderComponent/orderdetails';
+import Dailyorder from '../../Components/OrderComponent/DailyOrder';
+import Orderdetails from '../../Components/OrderComponent/OrderDetails';
 
 interface Order {
   

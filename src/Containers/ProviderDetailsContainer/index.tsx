@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom'
 import { FetchProviderDetails, FetchProviderMenus, FetchTransaction } from '../../Services/ProviderService';
 import { toast } from 'react-toastify';
 import { ProviderDetails, ProviderMenu, Transaction } from '../../Components/ProviderComponent/type';
-import ProviderDetailsComponent from '../../Components/ProviderComponent/providerDetails';
-import TransactionHistory from '../../Components/ProviderComponent/transactionHistory';
+import ProviderDetailsComponent from '../../Components/ProviderComponent/ProviderDetails';
+import TransactionHistory from '../../Components/ProviderComponent/TransactionHistory';
 
 
 const ProviderDetailsContainer=()=> {

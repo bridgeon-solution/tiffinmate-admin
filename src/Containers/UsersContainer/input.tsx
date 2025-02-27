@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Usertable from "../../Components/UserComponent/userstable";
 import { BlockUnblockUser, PaginationUser } from "../../Services/UserService";
 import { toast } from "react-toastify";
 import BasicModal from "../../Atoms/Modal";
-import Userdetails from "../../Components/UserComponent/userdetails";
 import { Box, CircularProgress, SelectChangeEvent } from "@mui/material";
+import Usertable from "../../Components/UserComponent/UsersTable";
+import Userdetails from "../../Components/UserComponent/UserDetails";
 
 interface User {
   id: string;

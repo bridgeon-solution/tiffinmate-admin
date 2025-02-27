@@ -4,9 +4,9 @@ import { useState,useEffect } from "react";
 import { toast } from "react-toastify";
 import * as XLSX from "xlsx";
 import { GetSubscrition } from "../../Services/OrderService";
-import Subscriptionorders from "../../Components/SubscriptionComponent/subscriptionorders";
 import BasicModal from "../../Atoms/Modal";
-import Subscriptiondetails from "../../Components/SubscriptionComponent/subscriptiondetails";
+import Subscriptionorders from "../../Components/SubscriptionComponent/SubscriptionOrders";
+import Subscriptiondetails from "../../Components/SubscriptionComponent/SubscriptionDetails";
 
 interface FoodItem {
   food_name: string;

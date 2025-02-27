@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { PaginationProvider } from "../../Services/ProviderService";
-import Providertable from "../../Components/ProviderComponent/providertable";
 import { toast } from "react-toastify";
 import { Box, CircularProgress, SelectChangeEvent } from "@mui/material";
 import { BlockUnblockProvider } from "../../Services/ProviderService";
 import { Provider } from "../../Components/ProviderComponent/type";
+import Providertable from "../../Components/ProviderComponent/providerTable";
 
 const VendorContainer: React.FC = () => {
   const [providerData, setProviderData] = useState<Provider[] | null>(null);

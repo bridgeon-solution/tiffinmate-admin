@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import BasicModal from "../../Atoms/Modal";
 import { ProviderDetails, ProviderMenu, Transaction } from "./type";
-import Providerreview from "./providerreview";
+import Providerreview from "./ProviderReview";
 
 interface ProviderDetailsComponentProps {
   providerDetails: ProviderDetails;

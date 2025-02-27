@@ -1,13 +1,13 @@
+import { BarChart } from "@mui/icons-material";
 import Cards from "../Components/DashBoardComponent/cards";
-import Barchart from "../Components/DashBoardComponent/barchart";
-import PieCard from "../Components/DashBoardComponent/piecharts";
+import PieCard from "../Components/DashBoardComponent/PieCharts";
 
 const DashboardPage = () => {
   return (
     <div>
       <Cards />
       <PieCard />
-      <Barchart />
+      <BarChart />
     </div>
   );
 };

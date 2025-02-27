@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { PaginationVerification } from "../../Services/ProviderService";
-import Verificationtable from "../../Components/ProviderComponent/verificationtable";
 import { toast } from "react-toastify";
 import {
   VerificationApprove,
   VerificationRejected,
 } from "../../Services/ProviderService";
 import { Box, CircularProgress, SelectChangeEvent } from "@mui/material";
+import Verificationtable from "../../Components/ProviderComponent/VerificationTable";
 
 interface Provider {
   id: string;
